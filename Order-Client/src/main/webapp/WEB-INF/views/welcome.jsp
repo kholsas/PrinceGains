@@ -53,39 +53,46 @@ Dear <strong>${user}</strong>, Welcome to Home Page.
                 </div>
             </div>
 
-            <form:form method="POST" modelAttribute="catalog">
+            <form:form method="POST" modelAttribute="catalog" action="${userActionUrl}">
                 <form:hidden path="id"/>
                 <form:hidden path="category"/>
                 <form:hidden path="name"/>
-                <form:hidden path="orderItems"/>
+                <%--<form:hidden path="orderItems"/>--%>
 
                 <div id="products" class="row list-group">
-                    <c:forEach var="orderItem" items="${catalog.orderItems}">
+                    <c:forEach var="orderItem" items="${catalog.orderItems}" varStatus="status">
 
                         <div class="item  col-xs-4 col-lg-4">
                             <div class="thumbnail">
                                 <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt=""/>
 
                                 <div class="caption">
-                                    <h4 class="group inner list-group-item-heading">
+                                    <h4 class="group inner list-ggroup-item-heading">
                                             ${orderItem.name}</h4>
+                                    <form:hidden path="orderItems[${status.index}].name"/>
+
 
                                     <p class="group inner list-group-item-text">
                                             ${orderItem.description}
+                                        <form:hidden path="orderItems[${status.index}].description"/>
                                     </p>
 
                                     <div class="row">
-                                        <div class="col-xs-12 col-md-6">
+                                        <div class="col-xs-12 col-md-3">
+                                            <div class="form-group">
+                                                <label for="quantity">Quantity</label>
+                                                <form:input type="text" class="form-control" id="quantity"
+                                                            placeholder="How many items?" path="orderItems[${status.index}].quantity"/>
+                                            </div>
                                             <p class="lead">
                                                 R ${orderItem.price}</p>
+                                            <form:hidden path="orderItems[${status.index}].price"/>
                                         </div>
-                                        <div class="col-xs-12 col-md-6">
-                                            <label for="${orderItem.id}" class="btn btn-primary">Add to Cart <input
-                                                    type="checkbox" id="${orderItem.id}" name="orderItem.addedToCart"
-                                                    class="badgebox"><span class="badge">&check;</span></label>
-                                        </div>
+
                                     </div>
                                 </div>
+
+                                <%--<img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt=""/>--%>
                             </div>
                         </div>
                     </c:forEach>
@@ -100,8 +107,7 @@ Dear <strong>${user}</strong>, Welcome to Home Page.
                             <input type="submit"
                                    class="btn btn-default btn-block btn-primary"
                                    value="Next" name="action" formmethod="POST"
-                                   formaction="confirmList"/>
-
+                                   formaction="confirmOrderItemList"/>
                         </div>
                     </div>
                 </div>

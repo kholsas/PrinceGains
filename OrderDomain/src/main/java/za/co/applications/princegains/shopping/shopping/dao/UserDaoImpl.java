@@ -22,8 +22,9 @@ public class UserDaoImpl extends AbstractDao<Integer, SystemUser> implements Use
 
         Criteria crit = createEntityCriteria();
         crit.add(Restrictions.eq("ssoId", sso));
+        SystemUser systemUser = (SystemUser) crit.uniqueResult();
         transaction.commit();
-        return (SystemUser) crit.uniqueResult();
+        return systemUser;
     }
 
 

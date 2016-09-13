@@ -19,5 +19,5 @@ public interface OrderService {
 
     void updateAnOrder(Order order);
 
-    Order getAnOrder(long id);
+    Order getAnOrder(int id);
 }

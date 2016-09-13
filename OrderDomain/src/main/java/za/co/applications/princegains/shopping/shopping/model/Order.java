@@ -2,6 +2,7 @@ package za.co.applications.princegains.shopping.shopping.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -28,7 +29,7 @@ public class Order {
     private SystemUser systemUser;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "orderItem_id")
-    private Set<OrderItem> orderItems;
+    private List<OrderItem> orderItems;
 
     public long getId() {
         return id;
@@ -54,11 +55,11 @@ public class Order {
         this.systemUser = systemUser;
     }
 
-    public Set<OrderItem> getOrderItems() {
+    public List<OrderItem> getOrderItems() {
         return orderItems;
     }
 
-    public void setOrderItems(Set<OrderItem> orderItems) {
+    public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
     }
 

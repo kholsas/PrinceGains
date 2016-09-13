@@ -23,11 +23,9 @@ public class OrderItem {
     @Column
     private int quantity;
 
-    @Transient
-    private boolean addedToCart;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "catalog_id", nullable = false)
+    @JoinColumn(name = "catalog_id", nullable = true)
     private Catalog catalog;
 
     public long getId() {
@@ -46,13 +44,6 @@ public class OrderItem {
         this.catalog = catalog;
     }
 
-    public boolean isAddedToCart() {
-        return addedToCart;
-    }
-
-    public void setAddedToCart(boolean addedToCart) {
-        this.addedToCart = addedToCart;
-    }
 
     public int getQuantity() {
         return quantity;
