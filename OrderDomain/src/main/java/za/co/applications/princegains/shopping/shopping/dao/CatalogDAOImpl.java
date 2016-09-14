@@ -4,10 +4,12 @@ import org.hibernate.Criteria;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import za.co.applications.princegains.shopping.shopping.model.Catalog;
-import za.co.applications.princegains.shopping.shopping.model.OrderItem;
+import za.co.applications.princegains.shopping.shopping.model.CatalogItem;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by kholofelo on 2016/09/08.
@@ -21,28 +23,29 @@ public class CatalogDAOImpl extends AbstractDao<Integer, Catalog> implements Cat
         return INSTANCE;
     }
 
-    public void saveCatalog(Catalog catalog) {
+    public void saveCatalog(final Catalog catalog) {
         Transaction transaction = getSession().beginTransaction();
         getSession().save(catalog);
         transaction.commit();
     }
 
-    public void updateCatalog(Catalog catalog) {
+    public void updateCatalog(final Catalog catalog) {
         Transaction transaction = getSession().beginTransaction();
         getSession().update(catalog);
         transaction.commit();
     }
 
-    public List<Catalog> getAllCatalogues() {
+    public Set<Catalog> getAllCatalogues() {
         Transaction transaction = getSession().beginTransaction();
         Criteria criteria = createEntityCriteria();
-        List list =  criteria.list();
+        Set<Catalog> catalogs = new HashSet<>(criteria.list());
         transaction.commit();
 
-        return list;
+        return catalogs;
     }
 
-    public Catalog getCatalogByCategory(Catalog.CatalogCategory category) {
+/*
+    public Catalog getCatalogByCategory(final Catalog.CatalogCategory category) {
         Transaction transaction = getSession().getTransaction();
         transaction.begin();
         Criteria criteria = createEntityCriteria();
@@ -51,25 +54,26 @@ public class CatalogDAOImpl extends AbstractDao<Integer, Catalog> implements Cat
         transaction.commit();
         return catalog;
     }
+*/
 
-    public List<Catalog> getCatalogByName(String name) {
+    public Set<Catalog> getCatalogByName(final String name) {
         Transaction transaction = getSession().beginTransaction();
         Criteria criteria = createEntityCriteria();
         criteria.add(Restrictions.eq("name", name));
-        List<Catalog> list = criteria.list();
+        Set<Catalog> list = new HashSet<>(criteria.list());
         transaction.commit();
         return list;
     }
 
-    public List<OrderItem> getAllCatalogItems() {
+    public Set<CatalogItem> getAllCatalogItems() {
         Transaction transaction = getSession().beginTransaction();
-        List<OrderItem> orderItems = new ArrayList<OrderItem>();
+        Set<CatalogItem> catalogItems = new HashSet<>();
         Criteria criteria = createEntityCriteria();
 
-        for (Catalog catalog : (List<Catalog>) criteria.list()) {
-            orderItems.addAll(catalog.getOrderItems());
-        }
+       /* for (Catalog catalog : (List<Catalog>) criteria.list()) {
+            catalogItems.addAll(catalog.getCatalogItems());
+        }*/
         transaction.commit();
-        return orderItems;
+        return catalogItems;
     }
 }

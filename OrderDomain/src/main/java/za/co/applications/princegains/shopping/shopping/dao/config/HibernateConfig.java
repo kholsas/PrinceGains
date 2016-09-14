@@ -18,8 +18,9 @@ public class HibernateConfig {
         try {
             AnnotationConfiguration configuration = new AnnotationConfiguration().configure();
             configuration.addAnnotatedClass(Catalog.class);
+            configuration.addAnnotatedClass(CatalogItem.class);
             configuration.addAnnotatedClass(Order.class);
-            configuration.addAnnotatedClass(OrderItem.class);
+            configuration.addAnnotatedClass(StockItem.class);
             configuration.addAnnotatedClass(SystemUser.class);
             configuration.addAnnotatedClass(UserProfile.class);
 

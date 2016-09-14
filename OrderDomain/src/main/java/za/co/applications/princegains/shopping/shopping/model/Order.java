@@ -3,7 +3,6 @@ package za.co.applications.princegains.shopping.shopping.model;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by kholofelo on 2016/09/08.
@@ -27,9 +26,10 @@ public class Order {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private SystemUser systemUser;
+
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "orderItem_id")
-    private List<OrderItem> orderItems;
+    @JoinColumn(name = "stock_item_id")
+    private List<StockItem> stockItems;
 
     public long getId() {
         return id;
@@ -55,12 +55,12 @@ public class Order {
         this.systemUser = systemUser;
     }
 
-    public List<OrderItem> getOrderItems() {
-        return orderItems;
+    public List<StockItem> getStockItems() {
+        return stockItems;
     }
 
-    public void setOrderItems(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
+    public void setStockItems(List<StockItem> stockItems) {
+        this.stockItems = stockItems;
     }
 
     public Timestamp getProcessedTime() {

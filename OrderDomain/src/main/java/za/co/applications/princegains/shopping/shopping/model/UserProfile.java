@@ -3,7 +3,7 @@ package za.co.applications.princegains.shopping.shopping.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="USER_PROFILE")
+@Table(name="UserProfiles")
 public class UserProfile {
 
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)

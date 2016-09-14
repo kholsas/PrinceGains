@@ -4,11 +4,12 @@ package za.co.applications.princegains.shopping.shopping.service.impl;
 import za.co.applications.princegains.shopping.shopping.dao.CatalogDAO;
 import za.co.applications.princegains.shopping.shopping.dao.CatalogDAOImpl;
 import za.co.applications.princegains.shopping.shopping.model.Catalog;
-import za.co.applications.princegains.shopping.shopping.model.OrderItem;
+import za.co.applications.princegains.shopping.shopping.model.CatalogItem;
+import za.co.applications.princegains.shopping.shopping.model.StockItem;
 import za.co.applications.princegains.shopping.shopping.service.CatalogService;
 
-import javax.transaction.Transaction;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by kholofelo on 2016/09/08.
@@ -24,15 +25,12 @@ public class CatalogServiceImpl implements CatalogService {
         return INSTANCE;
     }
 
-    public List<Catalog> getAllCatalogues() {
+    public Set<Catalog> getAllCatalogues() {
         return catalogDAO.getAllCatalogues();
     }
 
-    public Catalog getCatalogByCategory(Catalog.CatalogCategory category) {
-        return catalogDAO.getCatalogByCategory(category);
-    }
 
-    public List<Catalog> getCatalogByName(String name) {
+    public Set<Catalog> getCatalogByName(String name) {
         return catalogDAO.getCatalogByName(name);
     }
 
@@ -44,7 +42,7 @@ public class CatalogServiceImpl implements CatalogService {
         catalogDAO.updateCatalog(catalog);
     }
 
-    public List<OrderItem> getAllCatalogItems() {
+    public Set<CatalogItem> getAllCatalogItems() {
         return catalogDAO.getAllCatalogItems();
     }
 }

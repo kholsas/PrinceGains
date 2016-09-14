@@ -2,20 +2,20 @@ package za.co.applications.princegains.shopping.shopping.dao;
 
 
 import za.co.applications.princegains.shopping.shopping.model.Catalog;
-import za.co.applications.princegains.shopping.shopping.model.OrderItem;
+import za.co.applications.princegains.shopping.shopping.model.CatalogItem;
+import za.co.applications.princegains.shopping.shopping.model.StockItem;
 
 import java.util.List;
+import java.util.Set;
 
 public interface CatalogDAO {
 
     void saveCatalog(Catalog catalog);
     void updateCatalog(Catalog catalog);
 
-    List<Catalog> getAllCatalogues();
+    Set<Catalog> getAllCatalogues();
 
-    Catalog getCatalogByCategory(Catalog.CatalogCategory category);
+    Set<Catalog> getCatalogByName(String name);
 
-    List<Catalog> getCatalogByName(String name);
-
-    List<OrderItem> getAllCatalogItems();
+    Set<CatalogItem> getAllCatalogItems();
 }
