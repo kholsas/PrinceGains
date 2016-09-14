@@ -97,7 +97,8 @@ public class StockItem {
         FOOD("Food"),
         CLOTHING("Clothing"),
         HEALTH_AND_BEAUTY("Health & Beauty"),
-        HOME("Home");
+        HOME("Home"),
+        OTHER("Other");
 
 
         private final String name;

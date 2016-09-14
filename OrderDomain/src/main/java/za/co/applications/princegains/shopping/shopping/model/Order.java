@@ -27,9 +27,11 @@ public class Order {
     @JoinColumn(name = "user_id")
     private SystemUser systemUser;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "stock_item_id")
-    private List<StockItem> stockItems;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "Order_OrderItem",
+            joinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "order_item_id", referencedColumnName = "id")})
+    private List<OrderItem> orderItems;
 
     public long getId() {
         return id;
@@ -55,12 +57,12 @@ public class Order {
         this.systemUser = systemUser;
     }
 
-    public List<StockItem> getStockItems() {
-        return stockItems;
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
-    public void setStockItems(List<StockItem> stockItems) {
-        this.stockItems = stockItems;
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
     public Timestamp getProcessedTime() {

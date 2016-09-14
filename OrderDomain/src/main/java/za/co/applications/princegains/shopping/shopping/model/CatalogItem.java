@@ -19,14 +19,17 @@ public class CatalogItem {
     @JoinColumn(name = "stockItem_id", nullable = false)
     private StockItem stockItem;
 
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "catalog")
+    private Catalog order;
+
     @Column
     private int numberAvailable;
 
     @Column
     private int numberSold;
 
-    @Column
-    private int quantity;
 
     public long getId() {
         return id;
@@ -61,14 +64,6 @@ public class CatalogItem {
         this.numberSold = numberSold;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -91,7 +86,6 @@ public class CatalogItem {
                 "id=" + id +
                 ", numberAvailable=" + numberAvailable +
                 ", numberSold=" + numberSold +
-                ", quantity=" + quantity +
                 '}';
     }
 }

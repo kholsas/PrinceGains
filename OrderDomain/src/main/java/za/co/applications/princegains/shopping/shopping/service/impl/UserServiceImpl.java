@@ -1,11 +1,12 @@
-package za.co.applications.princegains.shopping.shopping.service;
+package za.co.applications.princegains.shopping.shopping.service.impl;
 
 
 import za.co.applications.princegains.shopping.shopping.dao.UserDao;
 import za.co.applications.princegains.shopping.shopping.dao.UserDaoImpl;
 import za.co.applications.princegains.shopping.shopping.model.SystemUser;
+import za.co.applications.princegains.shopping.shopping.service.UserService;
 
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
 	private UserDao dao = UserDaoImpl.getInstance();
 private static final UserService INSTANCE = new UserServiceImpl();
