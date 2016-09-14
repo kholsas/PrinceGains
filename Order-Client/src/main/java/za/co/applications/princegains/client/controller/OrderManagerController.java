@@ -10,15 +10,15 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import za.co.applications.princegains.shopping.shopping.model.Catalog;
+import za.co.applications.princegains.shopping.shopping.model.CatalogItem;
 import za.co.applications.princegains.shopping.shopping.model.Order;
 import za.co.applications.princegains.shopping.shopping.model.OrderItem;
-import za.co.applications.princegains.shopping.shopping.model.SystemUser;
 import za.co.applications.princegains.shopping.shopping.service.CatalogService;
 import za.co.applications.princegains.shopping.shopping.service.OrderService;
 import za.co.applications.princegains.shopping.shopping.service.UserService;
-import za.co.applications.princegains.shopping.shopping.service.UserServiceImpl;
 import za.co.applications.princegains.shopping.shopping.service.impl.CatalogServiceImpl;
 import za.co.applications.princegains.shopping.shopping.service.impl.OrderServiceImpl;
+import za.co.applications.princegains.shopping.shopping.service.impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,14 +40,13 @@ public class OrderManagerController {
     public String homePage(ModelMap model) {
         model.addAttribute("user", getPrincipal());
 
-        Catalog catalog = null;
-     /*   if (model.get("catalog") != null) {
-            catalog = (Catalog) model.get("catalog");
-        } else */
-        {
-            catalog = catalogService.getCatalogByCategory(Catalog.CatalogCategory.ALL);
+
+        List<Catalog> catalogs = catalogService.getAllCatalogues();
+        if (catalogs.isEmpty()) {
+            model.addAttribute("errorMessage", "We had a problem loading the Catalog. We've got our techs right on it.<p> We apologise for the inconvenience");
+        } else {
+            model.addAttribute("catalog", catalogs.get(0));
         }
-        model.addAttribute("catalog", catalog);
         return "welcome";
     }
 
@@ -59,25 +58,22 @@ public class OrderManagerController {
 
     @RequestMapping(value = "/confirmOrderItemList", method = RequestMethod.POST)
     public String confirmOrderList(Catalog catalog) {
-
-        List<OrderItem> selectedItems = new ArrayList<OrderItem>();
-        for (OrderItem orderItem : catalog.getOrderItems()) {
-            if (orderItem.getQuantity() > 0) {
-                orderItem.setCatalog(catalog);
-                selectedItems.add(orderItem);
+        List<OrderItem> orderItems = new ArrayList<OrderItem>();
+        for (CatalogItem catalogItem : catalog.getCatalogItems()) {
+            if (catalogItem.getQuantity() > 0) {
+                OrderItem orderItem = new OrderItem();
+                orderItem.setQuantity(catalogItem.getQuantity());
+                orderItem.setStockItem(catalogItem.getStockItem());
+                orderItems.add(orderItem);
             }
         }
 
-        SystemUser systemUser = userService.findBySso(getPrincipal());
-
-        Order order = new Order();
-        order.setOrderItems(selectedItems);
-        order.setOrderTime(new Timestamp(new Date().getTime()));
-
-        if (systemUser != null) {
-            order.setSystemUser(systemUser);
+        if(!orderItems.isEmpty()){
+            Order order = new Order();
+            order.setOrderItems(orderItems);
+            order.setOrderTime(new Timestamp(new Date().getTime()));
+            orderService.makeAnOrder(order);
         }
-        orderService.makeAnOrder(order);
         return "welcome";
     }
 

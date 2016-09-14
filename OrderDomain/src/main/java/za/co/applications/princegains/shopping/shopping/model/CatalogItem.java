@@ -30,6 +30,8 @@ public class CatalogItem {
     @Column
     private int numberSold;
 
+    @Transient
+    private int quantity;
 
     public long getId() {
         return id;
@@ -62,6 +64,22 @@ public class CatalogItem {
 
     public void setNumberSold(int numberSold) {
         this.numberSold = numberSold;
+    }
+
+    public Catalog getOrder() {
+        return order;
+    }
+
+    public void setOrder(Catalog order) {
+        this.order = order;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     @Override

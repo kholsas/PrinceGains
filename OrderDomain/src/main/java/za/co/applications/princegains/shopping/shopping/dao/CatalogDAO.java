@@ -13,9 +13,9 @@ public interface CatalogDAO {
     void saveCatalog(Catalog catalog);
     void updateCatalog(Catalog catalog);
 
-    Set<Catalog> getAllCatalogues();
+    List<Catalog> getAllCatalogues();
 
-    Set<Catalog> getCatalogByName(String name);
+    List<Catalog> getCatalogByName(String name);
 
-    Set<CatalogItem> getAllCatalogItems();
+    List<CatalogItem> getAllCatalogItems();
 }

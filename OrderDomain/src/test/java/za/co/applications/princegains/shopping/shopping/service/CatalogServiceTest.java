@@ -24,7 +24,7 @@ private CatalogService catalogService;
 
     @Test
     public void testGetAllCatalogues() throws Exception {
-        Set<Catalog> catalogList = catalogService.getAllCatalogues();
+        List<Catalog> catalogList = catalogService.getAllCatalogues();
     //    assertNotNull(catalogList);
       //  assertTrue(catalogList.isEmpty());
     }

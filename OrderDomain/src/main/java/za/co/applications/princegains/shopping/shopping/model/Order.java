@@ -27,7 +27,7 @@ public class Order {
     @JoinColumn(name = "user_id")
     private SystemUser systemUser;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     @JoinTable(name = "Order_OrderItem",
             joinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "order_item_id", referencedColumnName = "id")})

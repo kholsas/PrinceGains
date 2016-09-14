@@ -25,12 +25,12 @@ public class CatalogServiceImpl implements CatalogService {
         return INSTANCE;
     }
 
-    public Set<Catalog> getAllCatalogues() {
+    public List<Catalog> getAllCatalogues() {
         return catalogDAO.getAllCatalogues();
     }
 
 
-    public Set<Catalog> getCatalogByName(String name) {
+    public List<Catalog> getCatalogByName(String name) {
         return catalogDAO.getCatalogByName(name);
     }
 
@@ -42,7 +42,7 @@ public class CatalogServiceImpl implements CatalogService {
         catalogDAO.updateCatalog(catalog);
     }
 
-    public Set<CatalogItem> getAllCatalogItems() {
+    public List<CatalogItem> getAllCatalogItems() {
         return catalogDAO.getAllCatalogItems();
     }
 }

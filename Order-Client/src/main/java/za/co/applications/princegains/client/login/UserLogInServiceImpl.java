@@ -11,7 +11,7 @@ import za.co.applications.princegains.shopping.shopping.model.State;
 import za.co.applications.princegains.shopping.shopping.model.SystemUser;
 import za.co.applications.princegains.shopping.shopping.model.UserProfile;
 import za.co.applications.princegains.shopping.shopping.service.UserService;
-import za.co.applications.princegains.shopping.shopping.service.UserServiceImpl;
+import za.co.applications.princegains.shopping.shopping.service.impl.UserServiceImpl;
 
 
 import java.util.ArrayList;

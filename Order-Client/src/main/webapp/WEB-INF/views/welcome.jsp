@@ -19,6 +19,7 @@
     <link href="<c:url value='/static/css/bootstrap-theme.min.css' />" rel="stylesheet"></link>
     <link href="<c:url value='/static/css/listview.css' />" rel="stylesheet"></link>
     <link href="<c:url value='/static/css/buttons.css' />" rel="stylesheet"></link>
+    <link href="<c:url value='/static/css/modern-business.css' />" rel="stylesheet"></link>
 
 
     <link rel="stylesheet" type="text/css"
@@ -43,6 +44,11 @@ Dear <strong>${user}</strong>, Welcome to Home Page.
                     <p>${numberOfItemsAdded} items added to your Shopping Basket</p>
                 </div>
             </c:if>
+            <c:if test="${errorMessage != null}">
+                <div class="alert alert-warning">
+                    <p>${errorMessage} </p>
+                </div>
+            </c:if>
             <div class="well well-sm">
                 <strong>Display</strong>
 
@@ -55,12 +61,13 @@ Dear <strong>${user}</strong>, Welcome to Home Page.
 
             <form:form method="POST" modelAttribute="catalog" action="${userActionUrl}">
                 <form:hidden path="id"/>
-                <form:hidden path="category"/>
                 <form:hidden path="name"/>
+                <form:hidden path="description"/>
                 <%--<form:hidden path="orderItems"/>--%>
 
                 <div id="products" class="row list-group">
-                    <c:forEach var="orderItem" items="${catalog.orderItems}" varStatus="status">
+                    <c:forEach var="catalogItem" items="${catalog.catalogItems}" varStatus="status">
+                        <%--<c:set var="catalog" scope="session" value="catalogItems[${status.index}]"/>--%>
 
                         <div class="item  col-xs-4 col-lg-4">
                             <div class="thumbnail">
@@ -68,13 +75,13 @@ Dear <strong>${user}</strong>, Welcome to Home Page.
 
                                 <div class="caption">
                                     <h4 class="group inner list-ggroup-item-heading">
-                                            ${orderItem.name}</h4>
-                                    <form:hidden path="orderItems[${status.index}].name"/>
+                                            ${catalogItem.stockItem.name}</h4>
+                                    <form:hidden path="catalogItems[${status.index}].stockItem.name"/>
 
 
                                     <p class="group inner list-group-item-text">
-                                            ${orderItem.description}
-                                        <form:hidden path="orderItems[${status.index}].description"/>
+                                            ${catalogItem.stockItem.description}
+                                        <form:hidden path="catalogItems[${status.index}].stockItem.description"/>
                                     </p>
 
                                     <div class="row">
@@ -82,17 +89,34 @@ Dear <strong>${user}</strong>, Welcome to Home Page.
                                             <div class="form-group">
                                                 <label for="quantity">Quantity</label>
                                                 <form:input type="text" class="form-control" id="quantity"
-                                                            placeholder="How many items?" path="orderItems[${status.index}].quantity"/>
+                                                            path="catalogItems[${status.index}].quantity"/>
                                             </div>
+                                            <div class="panel-body">
+                                                <span class="price"><sup>R </sup> ${catalogItem.stockItem.price}<sup>*</sup></span>
+                                                <form:hidden path="catalogItems[${status.index}].stockItem.price"/>
+                                                <span class="period">Once off</span>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-3">
                                             <p class="lead">
-                                                R ${orderItem.price}</p>
-                                            <form:hidden path="orderItems[${status.index}].price"/>
+                                                    ${catalogItem.numberAvailable} Available
+                                            </p>
+
+                                            <p class="lead">
+                                                    ${catalogItem.numberSold} Sold
+                                            </p>
+                                            <form:hidden path="catalogItems[${status.index}].numberAvailable"/>
+                                            <form:hidden path="catalogItems[${status.index}].numberSold"/>
+
                                         </div>
 
                                     </div>
                                 </div>
 
-                                <%--<img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt=""/>--%>
                             </div>
                         </div>
                     </c:forEach>

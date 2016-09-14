@@ -1,8 +1,8 @@
 package za.co.applications.princegains.shopping.shopping.model;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kholofelo on 2016/09/08.
@@ -24,11 +24,11 @@ public class Catalog {
     private String description;
 
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "Catal_CatalItem",
             joinColumns = {@JoinColumn(name = "catalog_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "catalog_item_id", referencedColumnName = "id")})
-    private Set<CatalogItem> catalogItems = new HashSet<>();
+    private List<CatalogItem> catalogItems = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -54,11 +54,11 @@ public class Catalog {
         this.description = description;
     }
 
-    public Set<CatalogItem> getCatalogItems() {
+    public List<CatalogItem> getCatalogItems() {
         return catalogItems;
     }
 
-    public void setCatalogItems(Set<CatalogItem> catalogItems) {
+    public void setCatalogItems(List<CatalogItem> catalogItems) {
         this.catalogItems = catalogItems;
     }
 

@@ -20,10 +20,12 @@ public class StockItem {
     private String description;
     @Column
     private double price;
+/*
 
     @Column
     @Enumerated(EnumType.STRING)
-    private StockItemCategory stockItemCategory;
+    private StockItemCategory stockItemCategory = StockItemCategory.ALL;
+*/
 
 
     public long getId() {
@@ -57,14 +59,14 @@ public class StockItem {
     public void setPrice(double price) {
         this.price = price;
     }
-
+/*
     public StockItemCategory getStockItemCategory() {
         return stockItemCategory;
     }
 
     public void setStockItemCategory(StockItemCategory stockItemCategory) {
         this.stockItemCategory = stockItemCategory;
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {
@@ -89,25 +91,8 @@ public class StockItem {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
-                ", stockItemCategory=" + stockItemCategory +
-                '}';
+                 '}';
     }
 
-    public enum StockItemCategory{
-        FOOD("Food"),
-        CLOTHING("Clothing"),
-        HEALTH_AND_BEAUTY("Health & Beauty"),
-        HOME("Home"),
-        OTHER("Other");
 
-
-        private final String name;
-        StockItemCategory(final String name){
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-    }
 }

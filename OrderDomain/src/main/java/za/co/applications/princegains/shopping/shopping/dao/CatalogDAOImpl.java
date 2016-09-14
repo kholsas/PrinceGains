@@ -35,10 +35,10 @@ public class CatalogDAOImpl extends AbstractDao<Integer, Catalog> implements Cat
         transaction.commit();
     }
 
-    public Set<Catalog> getAllCatalogues() {
+    public List<Catalog> getAllCatalogues() {
         Transaction transaction = getSession().beginTransaction();
         Criteria criteria = createEntityCriteria();
-        Set<Catalog> catalogs = new HashSet<>(criteria.list());
+        List<Catalog> catalogs = criteria.list();
         transaction.commit();
 
         return catalogs;
@@ -56,23 +56,23 @@ public class CatalogDAOImpl extends AbstractDao<Integer, Catalog> implements Cat
     }
 */
 
-    public Set<Catalog> getCatalogByName(final String name) {
+    public List<Catalog> getCatalogByName(final String name) {
         Transaction transaction = getSession().beginTransaction();
         Criteria criteria = createEntityCriteria();
         criteria.add(Restrictions.eq("name", name));
-        Set<Catalog> list = new HashSet<>(criteria.list());
+        List<Catalog> list = criteria.list();
         transaction.commit();
         return list;
     }
 
-    public Set<CatalogItem> getAllCatalogItems() {
+    public List<CatalogItem> getAllCatalogItems() {
         Transaction transaction = getSession().beginTransaction();
-        Set<CatalogItem> catalogItems = new HashSet<>();
+        List<CatalogItem> catalogItems = new ArrayList<>();
         Criteria criteria = createEntityCriteria();
 
-       /* for (Catalog catalog : (List<Catalog>) criteria.list()) {
+        for (Catalog catalog : (List<Catalog>) criteria.list()) {
             catalogItems.addAll(catalog.getCatalogItems());
-        }*/
+        }
         transaction.commit();
         return catalogItems;
     }
