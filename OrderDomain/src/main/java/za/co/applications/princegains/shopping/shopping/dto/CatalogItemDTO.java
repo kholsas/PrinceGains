@@ -57,4 +57,15 @@ public class CatalogItemDTO {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    @Override
+    public String toString() {
+        return "CatalogItemDTO{" +
+                "id=" + id +
+                ", stockItem=" + stockItem +
+                ", numberAvailable=" + numberAvailable +
+                ", numberSold=" + numberSold +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

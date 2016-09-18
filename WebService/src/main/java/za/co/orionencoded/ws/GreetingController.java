@@ -1,11 +1,10 @@
 package za.co.orionencoded.ws;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import za.co.applications.princegains.shopping.shopping.dto.CatalogDTO;
-import za.co.applications.princegains.shopping.shopping.dto.StockItemDTO;
+import za.co.applications.princegains.shopping.shopping.dto.CatalogItemDTO;
 import za.co.applications.princegains.shopping.shopping.service.CatalogService;
 import za.co.applications.princegains.shopping.shopping.service.impl.CatalogServiceImpl;
 
@@ -39,6 +38,16 @@ public class GreetingController {
     public CatalogDTO getMainCatalog(@RequestParam(required = false, defaultValue = "World") String name) {
         System.out.println("==== in getAllCatalogs ====");
         return catalogService.getAllCatalogues().get(0);
+    }
+
+    //TODO: need to write a function to return ONE catalog
+    @CrossOrigin
+    @PostMapping("/makeOrder")
+    public ResponseEntity<List<CatalogItemDTO>> makeOrder(@RequestBody List<CatalogItemDTO> catalogItemDTOList) {
+        // TODO: call persistence layer to update
+        System.out.println("==== in makeOrder ==== catalogDTOList: " + catalogItemDTOList);
+
+        return new ResponseEntity<List<CatalogItemDTO>>(catalogItemDTOList, HttpStatus.OK);
     }
 
     @GetMapping("/greeting-javaconfig")

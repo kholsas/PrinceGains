@@ -30,6 +30,11 @@ scotchApp.config(function ($routeProvider) {
         .when('/contact', {
             templateUrl: 'pages/contact.html',
             controller: 'contactController'
+        })
+        //checkout controller
+        .when('/checkout', {
+            templateUrl: 'pages/checkout.html',
+            controller: 'checkOutController'
         });
 });
 
@@ -37,14 +42,19 @@ scotchApp.config(function ($routeProvider) {
 scotchApp.controller('mainController', function ($scope, $http) {
 
     $http.get('http://localhost:8080/mainCatalog').then(function (response) {
-         $scope.catalogItemDTOs = response.data.catalogItemDTOs;
+        $scope.catalogItemDTOs = response.data.catalogItemDTOs;
     });
     // create a message to display in our view
     $scope.message = 'This is the catalog page!';
 });
 
 scotchApp.controller('aboutController', function ($scope) {
-    $scope.message = 'Look! I am an about page.';
+    $scope.message =  'This is the About Prince of Gains page';
+});
+scotchApp.controller('checkOutController', function ($scope, $http) {
+    //var listOfItems = {'catalogItemDTOs': $scope.catalogItemDTOs};
+
+    $http.post('http://localhost:8080/makeOrder',  $scope.catalogItemDTOs);
 });
 
 scotchApp.controller('contactController', function ($scope) {

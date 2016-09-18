@@ -10,7 +10,7 @@
             </div>
         </div>
         <div id="products" class="row list-group">
-            <div class="item  col-xs-4 col-lg-4" ng-repeat="catalogItem in catalogItemDTOs">
+            <div class="item  col-xs-4 col-lg-4" ng-repeat="catalogItem in catalogItemDTOs track by $index">
                 <div class="thumbnail">
                     <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt=""/>
 
@@ -18,20 +18,26 @@
                         <h4 class="group inner list-group-item-heading">
                             {{catalogItem.stockItem.name}}</h4>
 
-                        <p class="group inner list-group-item-text">
-                            {{catalogItem.stockItem.description}}</p>
+                        <label class="group inner list-group-item-text">
+                            {{catalogItem.stockItem.description}}</label>
 
                         <div class="row">
                             <div class="col-xs-12 col-md-6">
                                 <p class="lead">
-                                    {{catalogItem.stockItem.price}}</p>
+                                    R {{catalogItem.stockItem.price}}</p>
                             </div>
-                            <div class="col-xs-12 col-md-6">
-                                <a class="btn btn-success" href="#">Add to cart</a>
+                            <div class="col-md-4">
+                                <input class="form-control" ng-model="catalogItem.quantity" type="number"/>
+                                <!--<a class="btn btn-success" href="#">Add to cart</a>-->
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6 pull-right">
+                <a href="#checkout" class="btn btn-primary pull-right">Checkout</a>
             </div>
         </div>
     </div>

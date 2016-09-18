@@ -48,4 +48,14 @@ public class CatalogDTO {
     public void setCatalogItemDTOs(List<CatalogItemDTO> catalogItemDTOs) {
         this.catalogItemDTOs = catalogItemDTOs;
     }
+
+    @Override
+    public String toString() {
+        return "CatalogDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", catalogItemDTOs=" + catalogItemDTOs +
+                '}';
+    }
 }
