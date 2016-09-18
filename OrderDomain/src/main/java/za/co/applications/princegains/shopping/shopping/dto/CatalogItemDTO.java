@@ -1,14 +1,9 @@
 package za.co.applications.princegains.shopping.shopping.dto;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * Created by kholofelo on 2016/09/16.
  */
 
-@XmlRootElement(name = "catalogItem")
 public class CatalogItemDTO {
 
     private long id;
@@ -23,7 +18,6 @@ public class CatalogItemDTO {
     public CatalogItemDTO() {
     }
 
-    @XmlAttribute
     public long getId() {
         return id;
     }
@@ -32,7 +26,6 @@ public class CatalogItemDTO {
         this.id = id;
     }
 
-    @XmlElement
     public StockItemDTO getStockItem() {
         return stockItem;
     }
@@ -41,7 +34,6 @@ public class CatalogItemDTO {
         this.stockItem = stockItem;
     }
 
-    @XmlElement
     public int getNumberAvailable() {
         return numberAvailable;
     }
@@ -50,7 +42,6 @@ public class CatalogItemDTO {
         this.numberAvailable = numberAvailable;
     }
 
-    @XmlElement
     public int getNumberSold() {
         return numberSold;
     }
@@ -59,7 +50,6 @@ public class CatalogItemDTO {
         this.numberSold = numberSold;
     }
 
-    @XmlElement
     public int getQuantity() {
         return quantity;
     }
