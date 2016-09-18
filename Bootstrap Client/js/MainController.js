@@ -37,7 +37,7 @@ scotchApp.config(function ($routeProvider) {
 scotchApp.controller('mainController', function ($scope, $http) {
 
     $http.get('http://localhost:8080/mainCatalog').then(function (response) {
-         $scope.catalogItemDTOs = response.data;
+         $scope.catalogItemDTOs = response.data.catalogItemDTOs;
     });
     // create a message to display in our view
     $scope.message = 'This is the catalog page!';
