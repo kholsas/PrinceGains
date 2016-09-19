@@ -5,9 +5,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import za.co.applications.princegains.shopping.shopping.dto.CatalogDTO;
 import za.co.applications.princegains.shopping.shopping.dto.CatalogItemDTO;
+import za.co.applications.princegains.shopping.shopping.model.Order;
+import za.co.applications.princegains.shopping.shopping.model.OrderItem;
 import za.co.applications.princegains.shopping.shopping.service.CatalogService;
+import za.co.applications.princegains.shopping.shopping.service.OrderService;
 import za.co.applications.princegains.shopping.shopping.service.impl.CatalogServiceImpl;
+import za.co.applications.princegains.shopping.shopping.service.impl.OrderServiceImpl;
+import za.co.orionencoded.converter.DTOTranslator;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -17,6 +25,7 @@ public class GreetingController {
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
     private final CatalogService catalogService = CatalogServiceImpl.getInstance();
+    private final OrderService orderService = OrderServiceImpl.getInstance();
 
     @CrossOrigin
     @GetMapping("/greeting")
@@ -46,7 +55,21 @@ public class GreetingController {
     public ResponseEntity<List<CatalogItemDTO>> makeOrder(@RequestBody List<CatalogItemDTO> catalogItemDTOList) {
         // TODO: call persistence layer to update
         System.out.println("==== in makeOrder ==== catalogDTOList: " + catalogItemDTOList);
-
+        Order order = new Order();
+        List<OrderItem> orderItems = new ArrayList<>();
+        if (catalogItemDTOList != null && !catalogItemDTOList.isEmpty()) {
+            for (CatalogItemDTO catalogItemDTO : catalogItemDTOList) {
+                if (catalogItemDTO.getQuantity() > 0) {
+                    OrderItem orderItem = new OrderItem();
+                    orderItem.setQuantity(catalogItemDTO.getQuantity());
+                    orderItem.setStockItem(DTOTranslator.stockItemToStockItemDTO(catalogItemDTO.getStockItem()));
+                    orderItems.add(orderItem);
+                }
+            }
+        }
+        order.setOrderItems(orderItems);
+        order.setOrderTime(new Timestamp(new Date().getTime()));
+        orderService.makeAnOrder(order);
         return new ResponseEntity<List<CatalogItemDTO>>(catalogItemDTOList, HttpStatus.OK);
     }
 
