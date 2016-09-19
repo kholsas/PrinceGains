@@ -38,6 +38,16 @@ scotchApp.config(function ($routeProvider) {
         });
 });
 
+scotchApp.controller('listFormController', function ($scope, $http, $location) {
+     $scope.submitForm = function () {
+
+        $http.post('http://localhost:8080/makeOrder', this.catalogItemDTOs).success(function (data) {
+            $scope.successMessage = 'Your order has been made!';
+            $location.path("/myOrders");
+        });
+    };
+});
+
 // create the controller and inject Angular's $scope
 scotchApp.controller('mainController', function ($scope, $http) {
 
@@ -49,13 +59,15 @@ scotchApp.controller('mainController', function ($scope, $http) {
 });
 
 scotchApp.controller('aboutController', function ($scope) {
-    $scope.message =  'This is the About Prince of Gains page';
+    $scope.message = 'This is the About Prince of Gains page';
 });
-scotchApp.controller('checkOutController', function ($scope, $http) {
-    //var listOfItems = {'catalogItemDTOs': $scope.catalogItemDTOs};
+/*
+ scotchApp.controller('checkOutController', function ($scope, $http) {
+ //var listOfItems = {'catalogItemDTOs': $scope.catalogItemDTOs};
 
-    $http.post('http://localhost:8080/makeOrder',  $scope.catalogItemDTOs);
-});
+ $http.post('http://localhost:8080/makeOrder',  $scope.catalogItemDTOs);
+ });
+ */
 
 scotchApp.controller('contactController', function ($scope) {
     $scope.message = 'Contact us! ';
