@@ -20,12 +20,12 @@ public class StockItem {
     private String description;
     @Column
     private double price;
-/*
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    private StockItemCategory stockItemCategory = StockItemCategory.ALL;
-*/
+    @Lob
+    @Column(name="stockItem_image", columnDefinition="mediumblob")
+    private byte[] image;
+
+
 
 
     public long getId() {
@@ -59,14 +59,14 @@ public class StockItem {
     public void setPrice(double price) {
         this.price = price;
     }
-/*
-    public StockItemCategory getStockItemCategory() {
-        return stockItemCategory;
+
+    public byte[] getImage() {
+        return image;
     }
 
-    public void setStockItemCategory(StockItemCategory stockItemCategory) {
-        this.stockItemCategory = stockItemCategory;
-    }*/
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -25,7 +25,7 @@ public class CatalogDAOImpl extends AbstractDao<Integer, Catalog> implements Cat
 
     public void saveCatalog(final Catalog catalog) {
         Transaction transaction = getSession().beginTransaction();
-        getSession().save(catalog);
+        getSession().saveOrUpdate(catalog);
         transaction.commit();
     }
 
