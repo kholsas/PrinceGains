@@ -21,10 +21,8 @@ public class StockItem {
     @Column
     private double price;
 
-    @Lob
-    @Column(name="stockItem_image", columnDefinition="mediumblob")
-    private byte[] image;
-
+   @Column
+   private String imageFileName;
 
 
 
@@ -60,12 +58,12 @@ public class StockItem {
         this.price = price;
     }
 
-    public byte[] getImage() {
-        return image;
+    public String getImageFileName() {
+        return imageFileName;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
     }
 
     @Override

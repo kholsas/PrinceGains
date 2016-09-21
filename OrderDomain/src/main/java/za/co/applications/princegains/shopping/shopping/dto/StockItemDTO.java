@@ -13,8 +13,11 @@ public class StockItemDTO {
 
     private double price;
 
+    private String imageFileName;
+
     public StockItemDTO() {
     }
+
 
     public long getId() {
         return id;
@@ -22,6 +25,14 @@ public class StockItemDTO {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getImageFileName() {
+        return imageFileName;
+    }
+
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
     }
 
     public String getName() {

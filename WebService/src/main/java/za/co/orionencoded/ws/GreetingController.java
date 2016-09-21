@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
-@RestController
+@RestController("/catalog")
 public class GreetingController {
 
     private static final String template = "Hello, %s!";
@@ -67,9 +67,13 @@ public class GreetingController {
                 }
             }
         }
-        order.setOrderItems(orderItems);
-        order.setOrderTime(new Timestamp(new Date().getTime()));
-        orderService.makeAnOrder(order);
+        if(!orderItems.isEmpty()) {
+            order.setOrderItems(orderItems);
+            order.setOrderTime(new Timestamp(new Date().getTime()));
+            orderService.makeAnOrder(order);
+        }else {
+            System.out.println("No order made! List empty!");
+        }
         return new ResponseEntity<List<CatalogItemDTO>>(catalogItemDTOList, HttpStatus.OK);
     }
 

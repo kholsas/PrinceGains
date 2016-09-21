@@ -8,7 +8,6 @@ import za.co.applications.princegains.shopping.shopping.service.StockItemManager
 import za.co.applications.princegains.shopping.shopping.service.impl.CatalogServiceImpl;
 import za.co.applications.princegains.shopping.shopping.service.impl.StockItemManagerServiceImpl;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,19 +81,13 @@ public class Runner {
 
     private static CatalogItem createCatalogItem(String stockItemName, String description,
                                                  int quantity, int available, double price, String fileName) {
-        byte[] image = new byte[0];
-        try {
-            image = readBytesFromFile(fileName);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         CatalogItem catalogItem = new CatalogItem();
         StockItem stockItem = new StockItem();
         stockItem.setName(stockItemName);
         stockItem.setDescription(description);
         stockItem.setPrice(price);
-        stockItem.setImage(image);
+        stockItem.setImageFileName(getProcessedImageFileName(fileName));
         catalogItem.setStockItem(stockItem);
         catalogItem.setQuantity(quantity);
         catalogItem.setNumberAvailable(available);
@@ -102,24 +95,8 @@ public class Runner {
         return catalogItem;
     }
 
-
-    private static void saveBytesToFile(String filePath, byte[] fileBytes) throws IOException {
-        FileOutputStream outputStream = new FileOutputStream(filePath);
-        outputStream.write(fileBytes);
-        outputStream.close();
+    private static String getProcessedImageFileName(String fileName) {
+        return fileName.replace(" ", "").trim();
     }
-
-    private static byte[] readBytesFromFile(String filePath) throws IOException {
-
-        InputStream inputStream = Runner.class.getClassLoader().getResourceAsStream(  filePath);
- //        FileInputStream inputStream = new FileInputStream(inputFile);
-        System.out.println("inputStream := " + inputStream);
-        byte[] fileBytes = new byte[]{};
-        inputStream.read(fileBytes);
-        inputStream.close();
-
-        return fileBytes;
-    }
-
 
 }
