@@ -10,6 +10,10 @@ scotchApp.config(function ($routeProvider) {
             templateUrl: 'pages/home.html',
             controller: 'mainController'
         })
+        .when('/list', {
+            templateUrl: 'pages/home.html',
+            controller: 'listController'
+        })
         .when('/home', {
             templateUrl: 'pages/home.html',
             controller: 'mainController'
@@ -39,7 +43,7 @@ scotchApp.config(function ($routeProvider) {
 });
 
 scotchApp.controller('listFormController', function ($scope, $http, $location) {
-     $scope.submitForm = function () {
+    $scope.submitForm = function () {
 
         $http.post('http://localhost:8080/makeOrder', this.catalogItemDTOs).success(function (data) {
             $scope.successMessage = 'Your order has been made!';
@@ -51,23 +55,27 @@ scotchApp.controller('listFormController', function ($scope, $http, $location) {
 // create the controller and inject Angular's $scope
 scotchApp.controller('mainController', function ($scope, $http) {
 
-    $http.get('http://localhost:8080/mainCatalog').then(function (response) {
-        $scope.catalogItemDTOs = response.data.catalogItemDTOs;
-    });
+    if (typeof $scope.allItems === 'undefined') {
+        $http.get('http://localhost:8080/organisedCatalog').then(function (response) {
+            $scope.allItems = response.data;
+        });
+    }
     // create a message to display in our view
     $scope.message = 'This is the catalog page!';
+});
+
+// create the controller and inject Angular's $scope
+scotchApp.controller('listController', function ($scope, $location) {
+
+    // create a message to display in our view
+    $scope.message = 'This is the catalog page!';
+    $scope.extraClass = 'list-group-item';
 });
 
 scotchApp.controller('aboutController', function ($scope) {
     $scope.message = 'This is the About Prince of Gains page';
 });
-/*
- scotchApp.controller('checkOutController', function ($scope, $http) {
- //var listOfItems = {'catalogItemDTOs': $scope.catalogItemDTOs};
 
- $http.post('http://localhost:8080/makeOrder',  $scope.catalogItemDTOs);
- });
- */
 
 scotchApp.controller('contactController', function ($scope) {
     $scope.message = 'Contact us! ';

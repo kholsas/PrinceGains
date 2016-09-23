@@ -13,6 +13,7 @@
         <version>1.4.0.RELEASE</version>
     </parent>
 
+
     <dependencies>
 
         <dependency>
@@ -50,6 +51,15 @@
 
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>public</directory>
+                <targetPath>public</targetPath>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

@@ -14,9 +14,7 @@ import za.co.applications.princegains.shopping.shopping.service.impl.OrderServic
 import za.co.orionencoded.converter.DTOTranslator;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController("/catalog")
@@ -39,6 +37,30 @@ public class GreetingController {
     public List<CatalogDTO> getAllCatalogs(@RequestParam(required = false, defaultValue = "World") String name) {
         System.out.println("==== in getAllCatalogs ====");
         return catalogService.getAllCatalogues();
+    }
+
+    //TODO: need to write a function to return ONE catalog
+    @CrossOrigin
+    @GetMapping("/organisedCatalog")
+    public Map<Integer, List<CatalogItemDTO>> getOrganisedCatalogItems() {
+        System.out.println("==== in organisedCatalog ====");
+        Map<Integer, List<CatalogItemDTO>> items = new HashMap<>();
+        int index = 0;
+        int position = 0;
+        for (CatalogItemDTO catalogItemDTO : catalogService.getAllCatalogues().get(0).getCatalogItemDTOs()) {
+            if (index < 3) {
+                index++;
+                if (items.get(position) == null) {
+                    items.put(position, new ArrayList<>());
+                }
+                items.get(position).add(catalogItemDTO);
+            } else {
+                position++;
+                index = 0;
+            }
+        }
+
+        return items;
     }
 
     //TODO: need to write a function to return ONE catalog
@@ -67,11 +89,11 @@ public class GreetingController {
                 }
             }
         }
-        if(!orderItems.isEmpty()) {
+        if (!orderItems.isEmpty()) {
             order.setOrderItems(orderItems);
             order.setOrderTime(new Timestamp(new Date().getTime()));
             orderService.makeAnOrder(order);
-        }else {
+        } else {
             System.out.println("No order made! List empty!");
         }
         return new ResponseEntity<List<CatalogItemDTO>>(catalogItemDTOList, HttpStatus.OK);
