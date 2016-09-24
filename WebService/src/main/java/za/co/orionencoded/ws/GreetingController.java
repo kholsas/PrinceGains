@@ -51,15 +51,18 @@ public class GreetingController {
 
     //TODO: need to write a function to return ONE catalog
     @CrossOrigin
-    @GetMapping("/catalogItemsByPageNumber")
-    public Map<Integer, List<CatalogItemDTO>> catalogItemsByPageNumber(@RequestParam(value = "pageNumber", defaultValue = "0") String pageNumber) {
+    @GetMapping("/catalogItemsByPageNumber/{pageNumber}")
+    public Map<Integer, List<CatalogItemDTO>> catalogItemsByPageNumber(@PathVariable String pageNumber) {
         System.out.println("==== in catalogItemsByPageNumber ====");
         System.out.println("==== in catalogItemsByPageNumber ==== pageNumber = " + pageNumber);
         Map<Integer, List<CatalogItemDTO>> items = getMappedCatalogItemsByPage();
+        if (pageNumber != null || items.size() >= Integer.parseInt(pageNumber) + 1) {
 
-        Map<Integer, List<CatalogItemDTO>> integerListHashMap = new HashMap<>();
-        integerListHashMap.put(0, items.get(Integer.parseInt(pageNumber)));
-        return integerListHashMap;
+            Map<Integer, List<CatalogItemDTO>> integerListHashMap = new HashMap<>();
+            integerListHashMap.put(0, items.get(Integer.parseInt(pageNumber)));
+            return integerListHashMap;
+        }
+        return null;
     }
 
     private Map<Integer, List<CatalogItemDTO>> getMappedCatalogItemsByPage() {

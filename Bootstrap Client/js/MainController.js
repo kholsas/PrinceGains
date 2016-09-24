@@ -55,11 +55,29 @@ scotchApp.controller('listFormController', function ($scope, $http, $location) {
 // create the controller and inject Angular's $scope
 scotchApp.controller('mainController', function ($scope, $http) {
 
-    if (typeof $scope.allItems === 'undefined') {
-        $http.get('http://localhost:8080/organisedCatalog').then(function (response) {
+    function fetchCatalogs() {
+
+        if (typeof $scope.pageNumber === 'undefined') {
+            $scope.pageNumber = 0;
+            this.pageNumber = $scope.pageNumber;
+        }
+        $http.get('http://localhost:8080/catalogItemsByPageNumber/' + $scope.pageNumber).then(function (response) {
             $scope.allItems = response.data;
         });
+
     }
+
+    fetchCatalogs.call(this);
+    $scope.previousPage = function () {
+        this.pageNumber = this.pageNumber - 1;
+        $scope.pageNumber = this.pageNumber;
+        fetchCatalogs();
+    };
+    $scope.nextPage = function () {
+        this.pageNumber = this.pageNumber + 1;
+        $scope.pageNumber = this.pageNumber;
+        fetchCatalogs();
+    };
     // create a message to display in our view
     $scope.message = 'This is the catalog page!';
 });
