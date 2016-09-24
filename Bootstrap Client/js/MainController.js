@@ -43,7 +43,7 @@ scotchApp.config(function ($routeProvider) {
 });
 
 // create the controller and inject Angular's $scope
-scotchApp.controller('mainController', function ($scope, $http) {
+scotchApp.controller('mainController', function ($scope, $http, $location) {
 
     function fetchCatalogs() {
 
