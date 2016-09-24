@@ -42,16 +42,6 @@ scotchApp.config(function ($routeProvider) {
         });
 });
 
-scotchApp.controller('listFormController', function ($scope, $http, $location) {
-    $scope.submitForm = function () {
-
-        $http.post('http://localhost:8080/makeOrder', this.catalogItemDTOs).success(function (data) {
-            $scope.successMessage = 'Your order has been made!';
-            $location.path("/myOrders");
-        });
-    };
-});
-
 // create the controller and inject Angular's $scope
 scotchApp.controller('mainController', function ($scope, $http) {
 
@@ -78,6 +68,14 @@ scotchApp.controller('mainController', function ($scope, $http) {
         $scope.pageNumber = this.pageNumber;
         fetchCatalogs();
     };
+    $scope.submitForm = function () {
+
+        $http.post('http://localhost:8080/makeOrder', this.allItems).success(function (data) {
+            $scope.successMessage = 'Your order has been made!';
+            $location.path("/myOrders");
+        });
+    };
+
     // create a message to display in our view
     $scope.message = 'This is the catalog page!';
 });

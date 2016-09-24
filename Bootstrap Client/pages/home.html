@@ -1,52 +1,54 @@
 <div class="jumbotron text-center">
-    <div class="container" ng-controller="listFormController"">
-        <div class="well well-sm">
-            <strong>Display</strong>
+    <div class="container" ng-controller="mainController"
+    ">
+    <div class="well well-sm">
+        <strong>Display</strong>
 
-            <div class="btn-group">
-                <a href="#list" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
+        <div class="btn-group">
+            <a href="#list" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
             </span>List</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
-                    class="glyphicon glyphicon-th"></span>Grid</a>
-            </div>
+                class="glyphicon glyphicon-th"></span>Grid</a>
         </div>
-        <form ng-submit='submitForm()'>
-            <div id="products" class="row list-group {{extraClass}}" ng-repeat="mapItem in allItems">
-                <div class="item {{extraClass}}   col-xs-4 col-lg-4" ng-repeat="catalogItem in mapItem track by $index">
-                    <div class="thumbnail">
-                        <img class="group list-group-image"
-                             src="http://localhost:8080/img/{{catalogItem.stockItem.imageFileName}}"
-                             alt="img"/>
+    </div>
+    <form ng-submit='submitForm()'>
+        <div id="products" class="row list-group {{extraClass}}" ng-repeat="mapItem in allItems">
+            <div class="item {{extraClass}}   col-xs-4 col-lg-4" ng-repeat="catalogItem in mapItem track by $index">
+                <div>
+                    <img class="group list-group-image"
+                         height="250px"
+                         src="http://localhost:8080/img/{{catalogItem.stockItem.imageFileName}}"
+                         alt="img"/>
 
-                        <div class="caption">
-                            <h4 class="group inner list-group-item-heading">
-                                {{catalogItem.stockItem.name}}</h4>
+                    <div class="caption">
+                        <h4 class="group inner list-group-item-heading">
+                            {{catalogItem.stockItem.name}}</h4>
 
-                            <label class="group inner list-group-item-text">
-                                {{catalogItem.stockItem.description}}</label>
+                        <label class="group inner list-group-item-text">
+                            {{catalogItem.stockItem.description}}</label>
 
-                            <div class="row">
-                                <div class="col-xs-12 col-md-6">
-                                    <p class="lead">
-                                        R {{catalogItem.stockItem.price}}</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <input name="quantity" class="form-control" ng-model="catalogItem.quantity"
-                                           type="number"/>
-                                </div>
-                                <div class="col-md-3 panel-info">
-                                    R {{catalogItem.quantity * catalogItem.stockItem.price}}
-                                </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6">
+                                <p class="lead">
+                                    R {{catalogItem.stockItem.price}}</p>
+                            </div>
+                            <div class="col-md-4">
+                                <input name="quantity" class="form-control" ng-model="catalogItem.quantity"
+                                       type="number"/>
+                            </div>
+                            <div class="col-md-3 panel-info">
+                                R {{catalogItem.quantity * catalogItem.stockItem.price}}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
+
         <div class="row">
             <div class="col-xs-3 col-md-2 pull-left">
                 <a ng-click="previousPage()" class="-anchor">Prev</a>
             </div>
-                [{{pageNumber}}]
+            [{{pageNumber}}]
             <div class="col-xs-3 col-md-2 pull-left">
                 <a ng-click="nextPage()" class="-anchor">Next</a>
             </div>
@@ -55,7 +57,7 @@
             </div>
 
         </div>
-        </form>
+    </form>
 
-    </div>
+</div>
 </div>

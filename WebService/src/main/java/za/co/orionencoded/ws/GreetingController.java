@@ -95,13 +95,13 @@ public class GreetingController {
     //TODO: need to write a function to return ONE catalog
     @CrossOrigin
     @PostMapping("/makeOrder")
-    public ResponseEntity<List<CatalogItemDTO>> makeOrder(@RequestBody List<CatalogItemDTO> catalogItemDTOList) {
+    public ResponseEntity<Map<Integer, List<CatalogItemDTO>>> makeOrder(@RequestBody Map<Integer, List<CatalogItemDTO>> catalogItemDTOList) {
         // TODO: call persistence layer to update
         System.out.println("==== in makeOrder ==== catalogDTOList: " + catalogItemDTOList);
         Order order = new Order();
         List<OrderItem> orderItems = new ArrayList<>();
         if (catalogItemDTOList != null && !catalogItemDTOList.isEmpty()) {
-            for (CatalogItemDTO catalogItemDTO : catalogItemDTOList) {
+            for (CatalogItemDTO catalogItemDTO : catalogItemDTOList.get(0)) {
                 if (catalogItemDTO.getQuantity() > 0) {
                     OrderItem orderItem = new OrderItem();
                     orderItem.setQuantity(catalogItemDTO.getQuantity());
@@ -117,7 +117,7 @@ public class GreetingController {
         } else {
             System.out.println("No order made! List empty!");
         }
-        return new ResponseEntity<List<CatalogItemDTO>>(catalogItemDTOList, HttpStatus.OK);
+        return new ResponseEntity<Map<Integer, List<CatalogItemDTO>>>(catalogItemDTOList, HttpStatus.OK);
     }
 
     @GetMapping("/greeting-javaconfig")
