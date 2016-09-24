@@ -44,6 +44,25 @@ public class GreetingController {
     @GetMapping("/organisedCatalog")
     public Map<Integer, List<CatalogItemDTO>> getOrganisedCatalogItems() {
         System.out.println("==== in organisedCatalog ====");
+        Map<Integer, List<CatalogItemDTO>> items = getMappedCatalogItemsByPage();
+
+        return items;
+    }
+
+    //TODO: need to write a function to return ONE catalog
+    @CrossOrigin
+    @GetMapping("/catalogItemsByPageNumber")
+    public Map<Integer, List<CatalogItemDTO>> catalogItemsByPageNumber(@RequestParam(value = "pageNumber", defaultValue = "0") String pageNumber) {
+        System.out.println("==== in catalogItemsByPageNumber ====");
+        System.out.println("==== in catalogItemsByPageNumber ==== pageNumber = " + pageNumber);
+        Map<Integer, List<CatalogItemDTO>> items = getMappedCatalogItemsByPage();
+
+        Map<Integer, List<CatalogItemDTO>> integerListHashMap = new HashMap<>();
+        integerListHashMap.put(0, items.get(Integer.parseInt(pageNumber)));
+        return integerListHashMap;
+    }
+
+    private Map<Integer, List<CatalogItemDTO>> getMappedCatalogItemsByPage() {
         Map<Integer, List<CatalogItemDTO>> items = new HashMap<>();
         int index = 0;
         int position = 0;
@@ -59,7 +78,6 @@ public class GreetingController {
                 index = 0;
             }
         }
-
         return items;
     }
 
