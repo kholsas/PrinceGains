@@ -55,12 +55,12 @@ scotchApp.controller('mainController', function ($scope, $http, $location) {
             $scope.pageNumber = 0;
             this.pageNumber = $scope.pageNumber;
         }
-        var reqURL = 'http://localhost:8080/catalogItemsByPageNumber/' + $scope.pageNumber;
-        //http://localhost:8080/catalogItemsByCategory/TOP/' + $scope.pageNumber
+        var reqURL = 'http://169.239.180.113:8090/catalogItemsByPageNumber/' + $scope.pageNumber;
+        //http://169.239.180.113:8080/catalogItemsByCategory/TOP/' + $scope.pageNumber
         if($scope.searchCriteria === 'ALL') {
 
         }else if($scope.searchCriteria === 'TOPS'){
-             reqURL = 'http://localhost:8080/catalogItemsByCategory/TOP/' + $scope.pageNumber;
+             reqURL = 'http://169.239.180.113:8090/catalogItemsByCategory/TOP/' + $scope.pageNumber;
         }
 
         $http.get(reqURL).then(function (response) {
@@ -82,7 +82,7 @@ scotchApp.controller('mainController', function ($scope, $http, $location) {
     };
     $scope.submitForm = function () {
 
-        $http.post('http://localhost:8080/makeOrder', this.allItems).success(function (data) {
+        $http.post('http://169.239.180.113:8090/makeOrder', this.allItems).success(function (data) {
             $scope.successMessage = 'Your order has been made!';
             $location.path("/myOrders");
         });

@@ -51,7 +51,7 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Override
     public List<CatalogItemDTO> getCatalogItemsByCategory(String category) {
-        List<CatalogItem> catalogItems = catalogDAO.getAllCatalogItemsByCategory(category);
+        List<CatalogItem> catalogItems = catalogDAO.getAllCatalogItems();
         List<CatalogItem> itemListToReturn = catalogItems.stream().filter(catalogItem -> catalogItem.getStockItem().getStockCategory().getValue().equalsIgnoreCase(category)).collect(Collectors.toList());
         return CatalogDTOConverter.toCatalogItemList(itemListToReturn);
     }
