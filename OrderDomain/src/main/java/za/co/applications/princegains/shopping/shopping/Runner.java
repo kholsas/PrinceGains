@@ -74,8 +74,8 @@ public class Runner {
 /*Second Stock*/
 //Mens stringer hooded tank top 	blue	medium	1	300
 
-        listOfCatalogItems.add(createCatalogItem("Net Vest", "Large Blue", 2, 2, 200, netVestBlue, StockItem.StockCategory.ACCESSORIES, "00022"));
-        listOfCatalogItems.add(createCatalogItem("Men's Stringer", "Large Blue", 2, 2, 200, netVestBlue, StockItem.StockCategory.ACCESSORIES, "00022"));
+        listOfCatalogItems.add(createCatalogItem("Net Vest", "Large Blue", 2, 2, 200, netVestBlue, StockItem.StockCategory.ACCESSORIES, "00023"));
+        listOfCatalogItems.add(createCatalogItem("Men's Stringer", "Large Blue", 2, 2, 200, netVestBlue, StockItem.StockCategory.ACCESSORIES, "00024"));
 
 
         catalog.setCatalogItems(listOfCatalogItems);

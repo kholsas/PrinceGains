@@ -7,9 +7,12 @@ import za.co.applications.princegains.shopping.shopping.dao.CatalogDAOImpl;
 import za.co.applications.princegains.shopping.shopping.dto.CatalogDTO;
 import za.co.applications.princegains.shopping.shopping.dto.CatalogItemDTO;
 import za.co.applications.princegains.shopping.shopping.model.Catalog;
+import za.co.applications.princegains.shopping.shopping.model.CatalogItem;
 import za.co.applications.princegains.shopping.shopping.service.CatalogService;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by kholofelo on 2016/09/08.
@@ -44,5 +47,12 @@ public class CatalogServiceImpl implements CatalogService {
 
     public List<CatalogItemDTO> getAllCatalogItems() {
         return CatalogDTOConverter.toCatalogItemList(catalogDAO.getAllCatalogItems());
+    }
+
+    @Override
+    public List<CatalogItemDTO> getCatalogItemsByCategory(String category) {
+        List<CatalogItem> catalogItems = catalogDAO.getAllCatalogItemsByCategory(category);
+        List<CatalogItem> itemListToReturn = catalogItems.stream().filter(catalogItem -> catalogItem.getStockItem().getStockCategory().getValue().equalsIgnoreCase(category)).collect(Collectors.toList());
+        return CatalogDTOConverter.toCatalogItemList(itemListToReturn);
     }
 }

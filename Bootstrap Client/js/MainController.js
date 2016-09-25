@@ -18,6 +18,10 @@ scotchApp.config(function ($routeProvider) {
             templateUrl: 'pages/home.html',
             controller: 'mainController'
         })
+        .when('/tops', {
+            templateUrl: 'pages/home.html',
+            controller: 'topsController'
+        })
 
         // route for the about page
         .when('/about', {
@@ -51,11 +55,19 @@ scotchApp.controller('mainController', function ($scope, $http, $location) {
             $scope.pageNumber = 0;
             this.pageNumber = $scope.pageNumber;
         }
-        $http.get('http://localhost:8080/catalogItemsByPageNumber/' + $scope.pageNumber).then(function (response) {
+        var reqURL = 'http://localhost:8080/catalogItemsByPageNumber/' + $scope.pageNumber;
+        //http://localhost:8080/catalogItemsByCategory/TOP/' + $scope.pageNumber
+        if($scope.searchCriteria === 'ALL') {
+
+        }else if($scope.searchCriteria === 'TOPS'){
+             reqURL = 'http://localhost:8080/catalogItemsByCategory/TOP/' + $scope.pageNumber;
+        }
+
+        $http.get(reqURL).then(function (response) {
             $scope.allItems = response.data;
         });
-
     }
+
 
     fetchCatalogs.call(this);
     $scope.previousPage = function () {
@@ -76,6 +88,7 @@ scotchApp.controller('mainController', function ($scope, $http, $location) {
         });
     };
 
+
     // create a message to display in our view
     $scope.message = 'This is the catalog page!';
 });
@@ -86,6 +99,10 @@ scotchApp.controller('listController', function ($scope, $location) {
     // create a message to display in our view
     $scope.message = 'This is the catalog page!';
     $scope.extraClass = 'list-group-item';
+});
+
+scotchApp.controller('topsController', function ($scope, $http) {
+    $scope.searchCriteria = 'TOPS';
 });
 
 scotchApp.controller('aboutController', function ($scope) {

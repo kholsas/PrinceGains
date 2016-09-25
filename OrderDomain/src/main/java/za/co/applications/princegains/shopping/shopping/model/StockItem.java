@@ -29,7 +29,7 @@ public class StockItem {
     @Enumerated(EnumType.STRING)
     private StockCategory stockCategory;
 
-    @Column
+    @Column(unique = true)
     private String stockItemCode;
 
     public String getStockItemCode() {
@@ -104,10 +104,14 @@ public class StockItem {
         BOTTOM("Bottom"),
         UNDERWEAR("Underwear"),
         ACCESSORIES("Accessory");
-        private final String name;
+        private final String value;
 
         StockCategory(final String name) {
-            this.name = name;
+            this.value = name;
+        }
+
+        public String getValue() {
+            return value;
         }
     }
 

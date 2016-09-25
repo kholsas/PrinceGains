@@ -15,16 +15,31 @@ public class StockItemDTO {
 
     private String imageFileName;
 
+    private String stockItemCode;
+    private String stockCategoty;
     public StockItemDTO() {
     }
-
-
     public long getId() {
         return id;
     }
-
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getStockItemCode() {
+        return stockItemCode;
+    }
+
+    public void setStockItemCode(String stockItemCode) {
+        this.stockItemCode = stockItemCode;
+    }
+
+    public String getStockCategoty() {
+        return stockCategoty;
+    }
+
+    public void setStockCategoty(String stockCategoty) {
+        this.stockCategoty = stockCategoty;
     }
 
     public String getImageFileName() {

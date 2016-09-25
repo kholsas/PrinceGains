@@ -76,4 +76,16 @@ public class CatalogDAOImpl extends AbstractDao<Integer, Catalog> implements Cat
         transaction.commit();
         return catalogItems;
     }
+
+    @Override
+    public List<CatalogItem> getAllCatalogItemsByCategory(String category) {
+        Transaction transaction = getSession().beginTransaction();
+        List<CatalogItem> catalogItems = new ArrayList<>();
+        Criteria criteria = createEntityCriteria();
+        criteria.add(Restrictions.eq("stockItem.stockCategory",category.toUpperCase()));
+        for (Catalog catalog : (List<Catalog>) criteria.list()) {
+            catalogItems.addAll(catalog.getCatalogItems());
+        }
+        transaction.commit();
+        return catalogItems;    }
 }

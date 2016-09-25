@@ -65,6 +65,44 @@ public class GreetingController {
         return null;
     }
 
+    //TODO: need to write a function to return ONE catalog
+    @CrossOrigin
+    @GetMapping("/catalogItemsByCategory/{category}/{pageNumber}")
+    public Map<Integer, List<CatalogItemDTO>> catalogItemsByCategory(@PathVariable String category, @PathVariable String pageNumber) {
+        System.out.println("==== in catalogItemsByCategory ====");
+        System.out.println("==== in catalogItemsByCategory ==== pageNumber = " + pageNumber + ", category = " + category);
+        Map<Integer, List<CatalogItemDTO>> items = getMappedCatalogItemsByCategory(category);
+
+        if (pageNumber != null || items.size() >= Integer.parseInt(pageNumber) + 1) {
+
+            Map<Integer, List<CatalogItemDTO>> integerListHashMap = new HashMap<>();
+            integerListHashMap.put(0, items.get(Integer.parseInt(pageNumber)));
+            return integerListHashMap;
+        }
+        return null;
+    }
+
+    private Map<Integer, List<CatalogItemDTO>> getMappedCatalogItemsByCategory(String category) {
+        Map<Integer, List<CatalogItemDTO>> items = new HashMap<>();
+        int index = 0;
+        int position = 0;
+        List<CatalogItemDTO> catalogItemsByCategory = catalogService.getCatalogItemsByCategory(category);
+        System.out.println("catalogItemsByCategory : found " + catalogItemsByCategory.size());
+        for (CatalogItemDTO catalogItemDTO : catalogItemsByCategory) {
+            if (index < 3) {
+                index++;
+                if (items.get(position) == null) {
+                    items.put(position, new ArrayList<>());
+                }
+                items.get(position).add(catalogItemDTO);
+            } else {
+                position++;
+                index = 0;
+            }
+        }
+        return items;
+    }
+
     private Map<Integer, List<CatalogItemDTO>> getMappedCatalogItemsByPage() {
         Map<Integer, List<CatalogItemDTO>> items = new HashMap<>();
         int index = 0;

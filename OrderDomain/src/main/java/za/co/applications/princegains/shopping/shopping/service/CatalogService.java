@@ -22,5 +22,6 @@ public interface CatalogService {
     void updateCatalog(Catalog catalog);
 
     List<CatalogItemDTO> getAllCatalogItems();
+    List<CatalogItemDTO> getCatalogItemsByCategory(String category);
 
 }

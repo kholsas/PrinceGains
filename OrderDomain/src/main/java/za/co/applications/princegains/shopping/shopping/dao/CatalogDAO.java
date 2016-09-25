@@ -18,4 +18,6 @@ public interface CatalogDAO {
     List<Catalog> getCatalogByName(String name);
 
     List<CatalogItem> getAllCatalogItems();
+
+    List<CatalogItem> getAllCatalogItemsByCategory(String category);
 }

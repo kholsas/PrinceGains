@@ -58,6 +58,8 @@ public class CatalogDTOConverter {
         stockItemDTO.setDescription(stockItem.getDescription());
         stockItemDTO.setPrice(stockItem.getPrice());
         stockItemDTO.setImageFileName(stockItem.getImageFileName());
+        stockItemDTO.setStockItemCode(stockItem.getStockItemCode());
+        stockItemDTO.setStockCategoty(stockItem.getStockCategory().getValue());
         return stockItemDTO;
     }
 }
