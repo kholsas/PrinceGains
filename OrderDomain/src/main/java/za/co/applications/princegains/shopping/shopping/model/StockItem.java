@@ -21,10 +21,20 @@ public class StockItem {
     @Column
     private double price;
 
-   @Column
-   private String imageFileName;
+    @Column
+    private String imageFileName;
 
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    private StockCategory stockCategory;
+
+    @Column
+    private String stockItemCode;
+
+    public String getStockItemCode() {
+        return stockItemCode;
+    }
 
     public long getId() {
         return id;
@@ -77,6 +87,31 @@ public class StockItem {
 
     }
 
+    public StockCategory getStockCategory() {
+        return stockCategory;
+    }
+
+    public void setStockCategory(StockCategory stockCategory) {
+        this.stockCategory = stockCategory;
+    }
+
+    public void setStockItemCode(String stockItemCode) {
+        this.stockItemCode = stockItemCode;
+    }
+
+    public enum StockCategory {
+        TOP("Top"),
+        BOTTOM("Bottom"),
+        UNDERWEAR("Underwear"),
+        ACCESSORIES("Accessory");
+        private final String name;
+
+        StockCategory(final String name) {
+            this.name = name;
+        }
+    }
+
+
     @Override
     public int hashCode() {
         return (int) (id ^ (id >>> 32));
@@ -89,7 +124,7 @@ public class StockItem {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
-                 '}';
+                '}';
     }
 
 
