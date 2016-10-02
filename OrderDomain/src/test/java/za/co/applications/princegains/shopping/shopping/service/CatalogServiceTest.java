@@ -2,7 +2,7 @@ package za.co.applications.princegains.shopping.shopping.service;
 
 import org.junit.Before;
 import org.junit.Test;
-import za.co.applications.princegains.shopping.shopping.dto.CatalogDTO;
+import za.co.applications.princegains.shopping.shopping.model.Catalog;
 import za.co.applications.princegains.shopping.shopping.service.impl.CatalogServiceImpl;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class CatalogServiceTest {
 
     @Test
     public void testGetAllCatalogues() throws Exception {
-        List<CatalogDTO> catalogList = catalogService.getAllCatalogues();
+        List<Catalog> catalogList = catalogService.getAllCatalogues();
         //    assertNotNull(catalogList);
         //  assertTrue(catalogList.isEmpty());
     }

@@ -68,7 +68,7 @@ public class OrderManagerController {
             }
         }
 
-        if(!orderItems.isEmpty()){
+        if (!orderItems.isEmpty()) {
             Order order = new Order();
             order.setOrderItems(orderItems);
             order.setOrderTime(new Timestamp(new Date().getTime()));

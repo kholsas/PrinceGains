@@ -13,15 +13,15 @@ import java.util.List;
  */
 public interface CatalogService {
 
-    List<CatalogDTO> getAllCatalogues();
+    List<Catalog> getAllCatalogues();
 
-    List<CatalogDTO> getCatalogByName(String name);
+    List<Catalog> getCatalogByName(String name);
 
     void createCatalog(Catalog catalog);
 
     void updateCatalog(Catalog catalog);
 
-    List<CatalogItemDTO> getAllCatalogItems();
-    List<CatalogItemDTO> getCatalogItemsByCategory(String category);
+    List<CatalogItem> getAllCatalogItems();
+    List<CatalogItem> getCatalogItemsByCategory(String category);
 
 }
