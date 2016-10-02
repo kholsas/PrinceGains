@@ -27,5 +27,16 @@ public class UserDaoImpl extends AbstractDao<Integer, SystemUser> implements Use
         return systemUser;
     }
 
+    @Override
+    public SystemUser createUser(SystemUser systemUser) {
+        Transaction transaction = getSession().beginTransaction();
+        save(systemUser);
+        Criteria criteria = createEntityCriteria();
+        criteria.add(Restrictions.eq("ssoId", systemUser.getSsoId()));
+        SystemUser user = (SystemUser) criteria.uniqueResult();
+        transaction.commit();
+        return user;
+    }
+
 
 }

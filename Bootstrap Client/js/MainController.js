@@ -14,6 +14,14 @@ scotchApp.config(function ($routeProvider) {
             templateUrl: 'pages/home.html',
             controller: 'listController'
         })
+        .when('/login', {
+            templateUrl: 'pages/login.html',
+            controller: 'loginController'
+        })
+        .when('/login2', {
+            templateUrl: 'pages/checkout.html',
+            controller: 'loginController'
+        })
         .when('/home', {
             templateUrl: 'pages/home.html',
             controller: 'mainController'
@@ -55,12 +63,12 @@ scotchApp.controller('mainController', function ($scope, $http, $location) {
             $scope.pageNumber = 0;
             this.pageNumber = $scope.pageNumber;
         }
-        var reqURL = 'http://169.239.180.113:8090/catalogItemsByPageNumber/' + $scope.pageNumber;
+        var reqURL = 'http://localhost:8090/catalogItemsByPageNumber/' + $scope.pageNumber;
         //http://169.239.180.113:8080/catalogItemsByCategory/TOP/' + $scope.pageNumber
         if($scope.searchCriteria === 'ALL') {
 
         }else if($scope.searchCriteria === 'TOPS'){
-             reqURL = 'http://169.239.180.113:8090/catalogItemsByCategory/TOP/' + $scope.pageNumber;
+             reqURL = 'http://localhost:8090/catalogItemsByCategory/TOP/' + $scope.pageNumber;
         }
 
         $http.get(reqURL).then(function (response) {
@@ -115,5 +123,15 @@ scotchApp.controller('contactController', function ($scope) {
 });
 
 scotchApp.controller('myOrdersController', function ($scope) {
+    $scope.message = 'You do not have any new orders';
+});
+scotchApp.controller('loginController', function ($scope) {
+    $scope.logIn = function () {
+
+        $http.post('http://localhost:8090/login/'+$scope.username+'/'+$scope.password, $scope.username).success(function (data) {
+            $scope.successMessage = 'Login Successful!';
+            $location.path("/myOrders");
+        });
+    };
     $scope.message = 'You do not have any new orders';
 });

@@ -8,6 +8,7 @@ public interface UserDao {
 	SystemUser findById(int id);
 	
 	SystemUser findBySSO(String sso);
-	
+
+	SystemUser createUser(SystemUser systemUser);
 }
 
