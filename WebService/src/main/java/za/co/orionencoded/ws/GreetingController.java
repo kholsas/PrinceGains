@@ -9,6 +9,7 @@ import za.co.applications.princegains.shopping.shopping.model.Order;
 import za.co.applications.princegains.shopping.shopping.model.OrderItem;
 import za.co.applications.princegains.shopping.shopping.service.CatalogService;
 import za.co.applications.princegains.shopping.shopping.service.OrderService;
+import za.co.applications.princegains.shopping.shopping.service.UserService;
 import za.co.applications.princegains.shopping.shopping.service.impl.CatalogServiceImpl;
 import za.co.applications.princegains.shopping.shopping.service.impl.OrderServiceImpl;
 import za.co.orionencoded.converter.DTOTranslator;

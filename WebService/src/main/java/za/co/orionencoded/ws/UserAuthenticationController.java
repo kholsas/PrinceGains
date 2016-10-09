@@ -27,7 +27,7 @@ public class UserAuthenticationController {
         systemUser.setEmail(email);
         systemUser.setSsoId(username);
         systemUser.setPassword(password);
-        Set<UserProfile> userProfiles  = new HashSet<>();
+        Set<UserProfile> userProfiles = new HashSet<>();
 
         UserProfile userProfile = new UserProfile();
         userProfile.setType("USER");
@@ -44,6 +44,17 @@ public class UserAuthenticationController {
         System.out.println("==== in login ====");
         SystemUser systemUser = USER_SERVICE.logIn(username, password);
         return systemUser;
+    }
+
+    @CrossOrigin
+    @PostMapping("/authenticate")
+    public SystemUser authenticate(@RequestParam String username, @RequestParam String password) {
+        System.out.println("==== in authenticate ====");
+        System.out.println("username is " + username +", and password is " + password);
+//        SystemUser systemUser = USER_S ERVICE.logIn(username, password);
+//        return systemUser;
+        return null;
+
     }
 
     @CrossOrigin

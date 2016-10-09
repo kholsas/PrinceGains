@@ -4,7 +4,6 @@ package za.co.applications.princegains.shopping.shopping.service;
 import za.co.applications.princegains.shopping.shopping.dto.CatalogDTO;
 import za.co.applications.princegains.shopping.shopping.dto.CatalogItemDTO;
 import za.co.applications.princegains.shopping.shopping.model.Catalog;
-import za.co.applications.princegains.shopping.shopping.model.CatalogItem;
 
 import java.util.List;
 
@@ -13,15 +12,16 @@ import java.util.List;
  */
 public interface CatalogService {
 
-    List<Catalog> getAllCatalogues();
+    List<CatalogDTO> getAllCatalogues();
 
-    List<Catalog> getCatalogByName(String name);
+    List<CatalogDTO> getCatalogByName(String name);
 
     void createCatalog(Catalog catalog);
 
     void updateCatalog(Catalog catalog);
 
-    List<CatalogItem> getAllCatalogItems();
-    List<CatalogItem> getCatalogItemsByCategory(String category);
+    List<CatalogItemDTO> getAllCatalogItems();
+
+    List<CatalogItemDTO> getCatalogItemsByCategory(String category);
 
 }

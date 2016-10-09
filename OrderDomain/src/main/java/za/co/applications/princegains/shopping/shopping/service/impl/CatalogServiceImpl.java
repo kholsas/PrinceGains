@@ -1,12 +1,16 @@
 package za.co.applications.princegains.shopping.shopping.service.impl;
 
 
+import za.co.applications.princegains.shopping.shopping.converter.CatalogDTOConverter;
 import za.co.applications.princegains.shopping.shopping.dao.CatalogDAO;
 import za.co.applications.princegains.shopping.shopping.dao.CatalogDAOImpl;
+import za.co.applications.princegains.shopping.shopping.dto.CatalogDTO;
+import za.co.applications.princegains.shopping.shopping.dto.CatalogItemDTO;
 import za.co.applications.princegains.shopping.shopping.model.Catalog;
 import za.co.applications.princegains.shopping.shopping.model.CatalogItem;
 import za.co.applications.princegains.shopping.shopping.service.CatalogService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,14 +28,16 @@ public class CatalogServiceImpl implements CatalogService {
         return INSTANCE;
     }
 
-    public List<Catalog> getAllCatalogues() {
-        return catalogDAO.getAllCatalogues();
+    public List<CatalogDTO> getAllCatalogues() {
+        return CatalogDTOConverter.toCatalogDTOList(catalogDAO.getAllCatalogues());
     }
 
 
-    public List<Catalog> getCatalogByName(String name) {
-        return catalogDAO.getCatalogByName(name);
+    public List<CatalogDTO> getCatalogByName(String name) {
+        return CatalogDTOConverter.toCatalogDTOList(catalogDAO.getCatalogByName(name));
     }
+
+
 
     public void createCatalog(Catalog catalog) {
         catalogDAO.saveCatalog(catalog);
@@ -41,14 +47,14 @@ public class CatalogServiceImpl implements CatalogService {
         catalogDAO.updateCatalog(catalog);
     }
 
-    public List<CatalogItem> getAllCatalogItems() {
-        return catalogDAO.getAllCatalogItems();
+    public List<CatalogItemDTO> getAllCatalogItems() {
+        return CatalogDTOConverter.toCatalogItemList(catalogDAO.getAllCatalogItems());
     }
 
     @Override
-    public List<CatalogItem> getCatalogItemsByCategory(String category) {
+    public List<CatalogItemDTO> getCatalogItemsByCategory(String category) {
         List<CatalogItem> catalogItems = catalogDAO.getAllCatalogItems();
         List<CatalogItem> itemListToReturn = catalogItems.stream().filter(catalogItem -> catalogItem.getStockItem().getStockCategory().getValue().equalsIgnoreCase(category)).collect(Collectors.toList());
-        return itemListToReturn;
+        return CatalogDTOConverter.toCatalogItemList(itemListToReturn);
     }
 }
