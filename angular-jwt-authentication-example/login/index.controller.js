@@ -18,6 +18,7 @@
         };
 
         function login() {
+            console.info('Logging in');
             vm.loading = true;
             AuthenticationService.Login(vm.username, vm.password, function (result) {
                 if (result === true) {

@@ -26,7 +26,7 @@
             if($scope.searchCriteria === 'ALL') {
 
             }else if($scope.searchCriteria === 'TOPS'){
-                reqURL = 'http://localhost:8090/catalogItemsByCategory/TOP/' + $scope.pageNumber;
+                reqURL = 'http://localhost:8090/catalogItemsByCategory/TOP/1' + $scope.pageNumber;
             }
 
             $http.get(reqURL).then(function (response) {
