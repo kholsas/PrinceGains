@@ -1,5 +1,6 @@
 package za.co.orionencoded.ws;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import za.co.applications.princegains.shopping.shopping.model.SystemUser;
 import za.co.applications.princegains.shopping.shopping.model.UserProfile;
@@ -8,6 +9,8 @@ import za.co.applications.princegains.shopping.shopping.service.impl.UserService
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController("/userauth")
 public class UserAuthenticationController {
@@ -48,12 +51,12 @@ public class UserAuthenticationController {
 
     @CrossOrigin
     @PostMapping("/authenticate")
-    public SystemUser authenticate(@RequestParam String username, @RequestParam String password) {
+    public ResponseEntity<SystemUser> authenticate(@RequestBody LoginUser user) {
         System.out.println("==== in authenticate ====");
-        System.out.println("username is " + username +", and password is " + password);
+        System.out.println("username is " + user.getUsername() + ", and pass is " + user.getPassword());
 //        SystemUser systemUser = USER_S ERVICE.logIn(username, password);
 //        return systemUser;
-        return null;
+        return new ResponseEntity<SystemUser>(new SystemUser(), OK);
 
     }
 
