@@ -13,6 +13,7 @@
 
         return service;
 
+        /*logging in*/
         function Login(username, password, callback) {
             $http.post('http://localhost:8090/authenticate/', {username: username, password: password})
                 .success(function (response) {

@@ -51,12 +51,13 @@ public class UserAuthenticationController {
 
     @CrossOrigin
     @PostMapping("/authenticate")
-    public ResponseEntity<SystemUser> authenticate(@RequestBody LoginUser user) {
+    public ResponseEntity<LoginUser> authenticate(@RequestBody LoginUser user) {
         System.out.println("==== in authenticate ====");
         System.out.println("username is " + user.getUsername() + ", and pass is " + user.getPassword());
 //        SystemUser systemUser = USER_S ERVICE.logIn(username, password);
 //        return systemUser;
-        return new ResponseEntity<SystemUser>(new SystemUser(), OK);
+        user.setToken("654325654");
+        return new ResponseEntity<LoginUser>(user, OK);
 
     }
 
