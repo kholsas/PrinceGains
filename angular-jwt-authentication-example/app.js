@@ -29,6 +29,12 @@
                 templateUrl: 'login/index.view.html',
                 controller: 'Login.IndexController',
                 controllerAs: 'vm'
+            })
+            .state('register', {
+                url: '/register',
+                templateUrl: 'register/registration.html',
+                controller: 'Register.FormController',
+                controllerAs: 'vm'
             });
     }
 

@@ -2,17 +2,49 @@
     <h1>My Orders</h1>
 
     <div class="row">
-        <table class="table table-striped">
-            <th >Order Time</th>
-            <th >Time Processed</th>
-            <th >Time Delivered</th>
+        <table class="table table-striped table-responsive">
+            <thead>
+            <th>Order Time</th>
+            <th>Time Processed</th>
+            <th>Time Delivered</th>
             <th>Expand</th>
-            <tr ng-repeat="order in orders">
+            </thead>
+            <tbody>
+
+
+            <tr id="package1" class="accordion-toggle" data-toggle="collapse" data-parent="#OrderPackages"
+                data-target=".packageDetails1" ng-repeat="order in orders">
                 <td>{{order.orderTime | date:'medium'}}</td>
                 <td>{{order.processedTime | date:'medium'}}</td>
                 <td>{{order.deliveredTime | date:'medium'}}</td>
-                <td>^</td>
-             </tr>
+                <td><i class="indicator glyphicon glyphicon-chevron-up pull-right"></i></td>
+
+
+                <div>
+                    <td colspan="3" class="hiddenRow">
+                        <div class="accordion-body collapse packageDetails1" id="accordion1">
+                            <table>
+                                <thead>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="orderItem in order.orderItems">
+                                    <td>{{orderItem.stockItem.name}}</td>
+                                    <td>{{orderItem.stockItem.quantity}}</td>
+                                    <td>{{orderItem.stockItem.price}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                </div>
+
+            </tr>
+
+
+            </tbody>
         </table>
     </div>
 </div>
