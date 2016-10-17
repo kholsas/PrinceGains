@@ -5,14 +5,13 @@
         .module('app')
         .controller('Home.IndexController', Controller);
 
-    function Controller($scope, $http, $location) {
+    function Controller($scope, $http, $location, $localStorage) {
         var vm = fetchCatalogs;
 
         initController();
 
         function initController() {
         }
-
 
 
         function fetchCatalogs() {
@@ -23,10 +22,10 @@
             }
             var reqURL = 'http://localhost:8090/catalogItemsByPageNumber/' + $scope.pageNumber;
             //http://169.239.180.113:8080/catalogItemsByCategory/TOP/' + $scope.pageNumber
-            if($scope.searchCriteria === 'ALL') {
+            if ($scope.searchCriteria === 'ALL') {
 
-            }else if($scope.searchCriteria === 'TOPS'){
-                reqURL = 'http://localhost:8090/catalogItemsByCategory/TOP/1' + $scope.pageNumber;
+            } else if ($scope.searchCriteria === 'TOPS') {
+                reqURL = 'http://localhost:8090/catalogItemsByCategory/TOP/' + $scope.pageNumber;
             }
 
             $http.get(reqURL).then(function (response) {
@@ -47,8 +46,8 @@
             fetchCatalogs();
         };
         $scope.submitForm = function () {
-
-            $http.post('http://localhost:8090/makeOrder', this.allItems).success(function (data) {
+            console.info('logged in user is ' + $localStorage.currentUser.username);
+            $http.post('http://localhost:8090/makeOrder/' + $localStorage.currentUser.username, this.allItems).success(function (data) {
                 $scope.successMessage = 'Your order has been made!';
                 $location.path("/myOrders");
             });

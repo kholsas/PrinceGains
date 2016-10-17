@@ -6,6 +6,8 @@ import za.co.applications.princegains.shopping.shopping.model.SystemUser;
 import za.co.applications.princegains.shopping.shopping.model.UserProfile;
 import za.co.applications.princegains.shopping.shopping.service.UserService;
 import za.co.applications.princegains.shopping.shopping.service.impl.UserServiceImpl;
+import za.co.orionencoded.security.CustomWebSecurity;
+import za.co.orionencoded.security.LoginUser;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,7 +15,7 @@ import java.util.Set;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController("/userauth")
-public class UserAuthenticationController {
+public class UserAuthenticationController extends CustomWebSecurity {
     private static final UserService USER_SERVICE = UserServiceImpl.getInstance();
 
 
@@ -41,43 +43,31 @@ public class UserAuthenticationController {
         return systemUser;
     }
 
-    @CrossOrigin
-    @PostMapping("/login/{username}/{password}")
-    public SystemUser logIn(@PathVariable String username, @PathVariable String password) {
-        System.out.println("==== in login ====");
-        SystemUser systemUser = USER_SERVICE.logIn(username, password);
-        return systemUser;
-    }
 
     @CrossOrigin
     @PostMapping("/authenticate")
     public ResponseEntity<LoginUser> authenticate(@RequestBody LoginUser user) {
         System.out.println("==== in authenticate ====");
-        System.out.println("username is " + user.getUsername() + ", and pass is " + user.getPassword());
-//        SystemUser systemUser = USER_S ERVICE.logIn(username, password);
-//        return systemUser;
-        user.setToken("654325654");
-        return new ResponseEntity<LoginUser>(user, OK);
+        LoginUser loggedInUser = loginUser(user);
+        return new ResponseEntity<LoginUser>(loggedInUser, OK);
 
     }
 
     @CrossOrigin
-    @PostMapping("/logOff/{username}")
-    public boolean logOff(@PathVariable String username) {
+    @PostMapping("/logOff/")
+    public ResponseEntity<LoginUser> logOff(@RequestBody LoginUser user) {
         System.out.println("==== in logOff ====");
-        USER_SERVICE.logoff(username);
 
-        return true;
+        return new ResponseEntity<LoginUser>(logoutUser(user), OK);
     }
 
     //TODO: need to write a function to return ONE catalog
     @CrossOrigin
     @PostMapping("/isAuthenticated/{username}")
-    public Boolean isAuthenticated(@PathVariable String username) {
+    public boolean isAuthenticated(@RequestBody LoginUser user) {
         System.out.println("==== in isAuthenticated ====");
-        Boolean authenticated = USER_SERVICE.isAuthenticated(username);
-        System.out.println("Authentication: " + authenticated);
-        return authenticated;
+
+        return isAuthenticated(user.getUsername());
     }
 
 

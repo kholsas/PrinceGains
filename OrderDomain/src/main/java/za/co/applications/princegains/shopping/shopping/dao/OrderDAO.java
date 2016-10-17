@@ -13,7 +13,7 @@ public interface OrderDAO {
 
     Order getOrderById(int id);
 
-    List<Order> getOrdersByUser(SystemUser systemUser);
+    List getOrdersByUser(SystemUser systemUser);
 
     List<Order> getOrdersWithinDateRange(Date startDate, Date endDate);
 

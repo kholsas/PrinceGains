@@ -1,6 +1,8 @@
 package za.co.applications.princegains.shopping.shopping.dao;
 
+import org.hibernate.Criteria;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import za.co.applications.princegains.shopping.shopping.model.Order;
 import za.co.applications.princegains.shopping.shopping.model.SystemUser;
 
@@ -22,8 +24,12 @@ public class OrderDAOImpl extends AbstractDao<Integer, Order> implements OrderDA
 
     @Override
     public List<Order> getOrdersByUser(SystemUser systemUser) {
-
-        return null;
+        Transaction transaction = getSession().beginTransaction();
+        Criteria criteria = createEntityCriteria();
+        criteria.add(Restrictions.eq("systemUser", systemUser));
+        List list = criteria.list();
+        transaction.commit();
+        return list;
     }
 
     @Override

@@ -1,5 +1,18 @@
 ﻿<div class="col-md-6 col-md-offset-3">
     <h1>My Orders</h1>
-    <p>You're logged in with JWT!!</p>
-    <p><a href="#/login">Logout</a></p>
+
+    <div class="row">
+        <table class="table table-striped">
+            <th >Order Time</th>
+            <th >Time Processed</th>
+            <th >Time Delivered</th>
+            <th>Expand</th>
+            <tr ng-repeat="order in orders">
+                <td>{{order.orderTime | date:'medium'}}</td>
+                <td>{{order.processedTime | date:'medium'}}</td>
+                <td>{{order.deliveredTime | date:'medium'}}</td>
+                <td>^</td>
+             </tr>
+        </table>
+    </div>
 </div>

@@ -21,7 +21,7 @@
             .state('myOrders', {
                 url: '/myOrders',
                 templateUrl: 'profile/orders.html',
-                controller: 'Profile.Orders',
+                controller: 'Profile.MyOrders',
                 controllerAs: 'vm'
             })
             .state('login', {

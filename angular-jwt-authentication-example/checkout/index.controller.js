@@ -3,7 +3,7 @@
 
     angular
         .module('app')
-        .controller('Profile.Orders', Controller);
+        .controller('Profile.CheckOut', Controller);
 
     function Controller() {
         var vm = this;

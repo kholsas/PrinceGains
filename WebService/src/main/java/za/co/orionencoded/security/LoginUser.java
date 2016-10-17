@@ -1,4 +1,4 @@
-package za.co.orionencoded.ws;
+package za.co.orionencoded.security;
 
 public class LoginUser {
 
@@ -6,6 +6,7 @@ public class LoginUser {
     private String username;
     private String password;
     private String token;
+    private boolean loggedIn;
 
     public String getUsername() {
         return username;
@@ -29,5 +30,13 @@ public class LoginUser {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
     }
 }

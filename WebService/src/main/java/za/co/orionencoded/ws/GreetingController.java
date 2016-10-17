@@ -7,31 +7,28 @@ import za.co.applications.princegains.shopping.shopping.dto.CatalogDTO;
 import za.co.applications.princegains.shopping.shopping.dto.CatalogItemDTO;
 import za.co.applications.princegains.shopping.shopping.model.Order;
 import za.co.applications.princegains.shopping.shopping.model.OrderItem;
+import za.co.applications.princegains.shopping.shopping.model.SystemUser;
 import za.co.applications.princegains.shopping.shopping.service.CatalogService;
 import za.co.applications.princegains.shopping.shopping.service.OrderService;
 import za.co.applications.princegains.shopping.shopping.service.UserService;
 import za.co.applications.princegains.shopping.shopping.service.impl.CatalogServiceImpl;
 import za.co.applications.princegains.shopping.shopping.service.impl.OrderServiceImpl;
+import za.co.applications.princegains.shopping.shopping.service.impl.UserServiceImpl;
 import za.co.orionencoded.converter.DTOTranslator;
+import za.co.orionencoded.security.CustomWebSecurity;
 
 import java.sql.Timestamp;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController("/catalog")
-public class GreetingController {
+public class GreetingController extends CustomWebSecurity {
 
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
     private final CatalogService catalogService = CatalogServiceImpl.getInstance();
     private final OrderService orderService = OrderServiceImpl.getInstance();
-
-    @CrossOrigin
-    @GetMapping("/greeting")
-    public Greeting greeting(@RequestParam(required = false, defaultValue = "World") String name) {
-        System.out.println("==== in greeting ====");
-        return new Greeting(counter.incrementAndGet(), String.format(template, name));
-    }
+    private final UserService userService = UserServiceImpl.getInstance();
 
     @CrossOrigin
     @GetMapping("/catalogs")
@@ -133,25 +130,32 @@ public class GreetingController {
 
     //TODO: need to write a function to return ONE catalog
     @CrossOrigin
-    @PostMapping("/makeOrder")
-    public ResponseEntity<Map<Integer, List<CatalogItemDTO>>> makeOrder(@RequestBody Map<Integer, List<CatalogItemDTO>> catalogItemDTOList) {
+    @PostMapping("/makeOrder/{username}")
+    public ResponseEntity<Map<Integer, List<CatalogItemDTO>>> makeOrder(@RequestBody Map<Integer, List<CatalogItemDTO>> catalogItemDTOList, @PathVariable String username) {
         // TODO: call persistence layer to update
-        System.out.println("==== in makeOrder ==== catalogDTOList: " + catalogItemDTOList);
+        System.out.println("==== in makeOrder ==== username : " + username);
         Order order = new Order();
         List<OrderItem> orderItems = new ArrayList<>();
         if (catalogItemDTOList != null && !catalogItemDTOList.isEmpty()) {
-            for (CatalogItemDTO catalogItemDTO : catalogItemDTOList.get(0)) {
-                if (catalogItemDTO.getQuantity() > 0) {
-                    OrderItem orderItem = new OrderItem();
-                    orderItem.setQuantity(catalogItemDTO.getQuantity());
-                    orderItem.setStockItem(DTOTranslator.stockItemToStockItemDTO(catalogItemDTO.getStockItem()));
-                    orderItems.add(orderItem);
+            for (Map.Entry<Integer, List<CatalogItemDTO>> integerListEntry : catalogItemDTOList.entrySet()) {
+                for (CatalogItemDTO catalogItemDTO : integerListEntry.getValue()) {
+                    if (catalogItemDTO.getQuantity() > 0) {
+                        OrderItem orderItem = new OrderItem();
+                        orderItem.setQuantity(catalogItemDTO.getQuantity());
+                        orderItem.setStockItem(DTOTranslator.stockItemToStockItemDTO(catalogItemDTO.getStockItem()));
+                        orderItems.add(orderItem);
+                    }
                 }
             }
+
         }
+
+        System.out.println("Order Items are : " + orderItems);
+        SystemUser systemUser = userService.findBySso(username);
         if (!orderItems.isEmpty()) {
             order.setOrderItems(orderItems);
             order.setOrderTime(new Timestamp(new Date().getTime()));
+            order.setSystemUser(systemUser);
             orderService.makeAnOrder(order);
         } else {
             System.out.println("No order made! List empty!");
@@ -159,10 +163,17 @@ public class GreetingController {
         return new ResponseEntity<Map<Integer, List<CatalogItemDTO>>>(catalogItemDTOList, HttpStatus.OK);
     }
 
-    @GetMapping("/greeting-javaconfig")
-    public Greeting greetingWithJavaconfig(@RequestParam(required = false, defaultValue = "World") String name) {
-        System.out.println("==== in greeting ====");
-        return new Greeting(counter.incrementAndGet(), String.format(template, name));
+    @CrossOrigin
+    @GetMapping("/getOrdersFor/{username}")
+    public List<Order> getOrdersForUser(@PathVariable String username) {
+        System.out.println("==== in getOrdersForUser: " + username + " ====");
+        SystemUser systemUser = userService.findBySso(username);
+        if (systemUser != null) {
+            System.out.println("user is found");
+            return orderService.getOrdersByPerson(systemUser);
+
+        }
+        return new ArrayList<>();
     }
 
 }
